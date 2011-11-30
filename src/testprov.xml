@@ -76,7 +76,7 @@
       </entity>
       <entity id="e5">
         <type>output:stat</type>
-        <pearson_correlation_coefficient>23.4</pearson_correlation_coefficient>
+        <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
       </entity>
     </entities>
     <activities>

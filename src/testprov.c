@@ -83,7 +83,7 @@ main(int argc, char **argv, char** envp)
 
     id = add_entity(prov_ptr);
     add_attribute(prov_ptr, id, "type", "output:stat");
-    add_attribute(prov_ptr, id, "pearson_correlation_coefficient", "23.4");
+    add_attribute(prov_ptr, id, "pearson_correlation_coefficient", ".234");
     add_generationRecord(prov_ptr, id, act_id, NULL);
 
 
