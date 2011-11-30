@@ -34,7 +34,7 @@ int
 main(int argc, char **argv, char** envp)
 {
     ProvPtr prov_ptr = create_provenance_object(1);
-    IDREF id;
+    IDREF id, act_id;
     char arg[50];
     int i;
 
@@ -47,12 +47,12 @@ main(int argc, char **argv, char** envp)
     }
 
     // Add program information
-    id = add_activity(prov_ptr, NULL, "11/30/11 00:13:20.650432 EST", "11/30/11 00:13:20.650550 EST");
-    add_attribute(prov_ptr, id, "type", "prov:program");
-    add_attribute(prov_ptr, id, "name", argv[0]);
-    add_attribute(prov_ptr, id, "version", version);
+    act_id = add_activity(prov_ptr, NULL, "11/30/11 00:13:20.650432 EST", "11/30/11 00:13:20.650550 EST");
+    add_attribute(prov_ptr, act_id, "type", "prov:program");
+    add_attribute(prov_ptr, act_id, "name", argv[0]);
+    add_attribute(prov_ptr, act_id, "version", version);
     char * cmdline = get_cmdline(argc, argv);
-    add_attribute(prov_ptr, id, "cmdline", cmdline);
+    add_attribute(prov_ptr, act_id, "cmdline", cmdline);
     free(cmdline);
 
     id = add_entity(prov_ptr);
@@ -79,10 +79,13 @@ main(int argc, char **argv, char** envp)
     id = add_entity(prov_ptr);
     add_attribute(prov_ptr, id, "type", "output:file");
     add_attribute(prov_ptr, id, "warped_file", "/full/path/to/file");
+    add_generationRecord(prov_ptr, id, act_id, NULL);
 
     id = add_entity(prov_ptr);
     add_attribute(prov_ptr, id, "type", "output:stat");
     add_attribute(prov_ptr, id, "pearson_correlation_coefficient", "23.4");
+    add_generationRecord(prov_ptr, id, act_id, NULL);
+
 
     print_provenance(prov_ptr, NULL);
     print_provenance(prov_ptr, "testprov.xml");

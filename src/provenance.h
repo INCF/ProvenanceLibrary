@@ -27,8 +27,11 @@ void print_provenance(ProvPtr, const char*);
 /* Record creation routines */
 IDREF add_entity(ProvPtr);
 IDREF add_activity(ProvPtr, const char* recipeLink, const char* startTime, const char* endTime);
-IDREF add_agent(ProvPtr p_prov, IDREF);
-IDREF add_note(ProvPtr p_prov, IDREF);
+IDREF add_agent(ProvPtr, IDREF entity);
+IDREF add_note(ProvPtr, IDREF annot);
+
+/* Relation routines */
+IDREF add_generationRecord(ProvPtr, IDREF entity, IDREF activity, const char* time);
 
 /* Record manipulation routines */
 int add_attribute(ProvPtr, IDREF, const char* key, const char* value);

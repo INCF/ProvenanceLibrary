@@ -90,6 +90,9 @@
     <agents/>
     <notes/>
   </element>
-  <relation/>
+  <relation>
+    <wasGeneratedBy id="wgb0" entity="e4" activity="a0"/>
+    <wasGeneratedBy id="wgb1" entity="e5" activity="a0"/>
+  </relation>
   <account/>
 </opmx>

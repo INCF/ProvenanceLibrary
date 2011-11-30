@@ -161,7 +161,8 @@ Generic element adding routine
 */
 static xmlNodePtr add_element(ProvPtr p_prov, const char* root,
                               const char* element_type,
-                              const char* input_id)
+                              const char* input_id,
+                              const char* id_prefix)
 {
     PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
     xmlNodePtr p_node, root_node;
@@ -177,11 +178,10 @@ static xmlNodePtr add_element(ProvPtr p_prov, const char* root,
     free_xpquery(p_xpquery);
 
     //fprintf(stdout, "%d:", size);
-
-    if (!strcmp(element_type, "entity"))
-        sprintf(id, "e%d", size);
-    else if (!strcmp(element_type, "activity"))
-        sprintf(id, "a%d", size);
+    if (input_id == NULL){
+        assert(id_prefix);
+        sprintf(id, "%s%d", id_prefix, size);
+    }
     else
         sprintf(id, "%s", input_id);
 
@@ -205,14 +205,14 @@ static xmlNodePtr add_element(ProvPtr p_prov, const char* root,
 
 IDREF add_entity(ProvPtr p_prov)
 {
-    xmlNodePtr p_node = add_element(p_prov, "entities", "entity", NULL);
+    xmlNodePtr p_node = add_element(p_prov, "entities", "entity", NULL, "e");
     return(xmlGetProp(p_node, "id"));
 }
 
 IDREF add_activity(ProvPtr p_prov, const char* recipeLink,
                    const char* startTime, const char* endTime)
 {
-    xmlNodePtr p_node = add_element(p_prov, "activities", "activity", NULL);
+    xmlNodePtr p_node = add_element(p_prov, "activities", "activity", NULL, "a");
     if (startTime != NULL)
         xmlSetProp(p_node, BAD_CAST "startTime", BAD_CAST startTime);
     if (endTime != NULL)
@@ -222,13 +222,26 @@ IDREF add_activity(ProvPtr p_prov, const char* recipeLink,
 
 IDREF add_agent(ProvPtr p_prov, IDREF id)
 {
-    xmlNodePtr p_node = add_element(p_prov, "agents", "agent", id);
+    xmlNodePtr p_node = add_element(p_prov, "agents", "agent", NULL, "ag");
+    xmlSetProp(p_node, BAD_CAST "entity", BAD_CAST id);
     return(xmlGetProp(p_node, "id"));
 }
 
 IDREF add_note(ProvPtr p_prov, IDREF id)
 {
-    xmlNodePtr p_node = add_element(p_prov, "notes", "note", id);
+    xmlNodePtr p_node = add_element(p_prov, "notes", "note", NULL, "n");
+    xmlSetProp(p_node, BAD_CAST "annotation", BAD_CAST id);
+    return(xmlGetProp(p_node, "id"));
+}
+
+/* add relations */
+IDREF add_generationRecord(ProvPtr p_prov, IDREF entity, IDREF activity, const char* time)
+{
+    xmlNodePtr p_node = add_element(p_prov, "relation", "wasGeneratedBy", NULL, "wgb");
+    xmlSetProp(p_node, BAD_CAST "entity", BAD_CAST entity);
+    xmlSetProp(p_node, BAD_CAST "activity", BAD_CAST activity);
+    if (time != NULL)
+        xmlSetProp(p_node, BAD_CAST "time", BAD_CAST time);
     return(xmlGetProp(p_node, "id"));
 }
 
