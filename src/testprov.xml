@@ -91,8 +91,8 @@
     <notes/>
   </element>
   <relation>
-    <used id="wub0" activity="a0" entity="e0"/>
-    <used id="wub1" activity="a0" entity="e1"/>
+    <used id="u0" activity="a0" entity="e0"/>
+    <used id="u1" activity="a0" entity="e1"/>
     <wasGeneratedBy id="wgb0" entity="e4" activity="a0"/>
     <wasGeneratedBy id="wgb1" entity="e5" activity="a0"/>
   </relation>
