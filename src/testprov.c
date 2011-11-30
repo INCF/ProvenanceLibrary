@@ -74,7 +74,15 @@ main(int argc, char **argv, char** envp)
 
     id = add_entity(prov_ptr);
     add_attribute(prov_ptr, id, "type", "runtime");
-    // add runtime info
+    // add runtime info such as walltime, cputime, host,
+
+    id = add_entity(prov_ptr);
+    add_attribute(prov_ptr, id, "type", "output:file");
+    add_attribute(prov_ptr, id, "warped_file", "/full/path/to/file");
+
+    id = add_entity(prov_ptr);
+    add_attribute(prov_ptr, id, "type", "output:stat");
+    add_attribute(prov_ptr, id, "pearson_correlation_coefficient", "23.4");
 
     print_provenance(prov_ptr, NULL);
     print_provenance(prov_ptr, "testprov.xml");

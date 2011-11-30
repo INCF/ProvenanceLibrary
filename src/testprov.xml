@@ -70,6 +70,14 @@
       <entity id="e3">
         <type>runtime</type>
       </entity>
+      <entity id="e4">
+        <type>output:file</type>
+        <warped_file>/full/path/to/file</warped_file>
+      </entity>
+      <entity id="e5">
+        <type>output:stat</type>
+        <pearson_correlation_coefficient>23.4</pearson_correlation_coefficient>
+      </entity>
     </entities>
     <activities>
       <activity id="a0" startTime="11/30/11 00:13:20.650432 EST" endTime="11/30/11 00:13:20.650550 EST">
