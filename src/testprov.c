@@ -38,14 +38,6 @@ main(int argc, char **argv, char** envp)
     char arg[50];
     int i;
 
-    //Add all input parameters. if you use getopt this can be refined further
-    for(i=1;i<argc; i++){
-        id = add_entity(prov_ptr);
-        add_attribute(prov_ptr, id, "type", "input");
-        sprintf(arg, "arg%d", i);
-        add_attribute(prov_ptr, id, arg, argv[i]);
-    }
-
     // Add program information
     act_id = add_activity(prov_ptr, NULL, "11/30/11 00:13:20.650432 EST", "11/30/11 00:13:20.650550 EST");
     add_attribute(prov_ptr, act_id, "type", "prov:program");
@@ -54,6 +46,15 @@ main(int argc, char **argv, char** envp)
     char * cmdline = get_cmdline(argc, argv);
     add_attribute(prov_ptr, act_id, "cmdline", cmdline);
     free(cmdline);
+
+    //Add all input parameters. if you use getopt this can be refined further
+    for(i=1;i<argc; i++){
+        id = add_entity(prov_ptr);
+        add_attribute(prov_ptr, id, "type", "input");
+        sprintf(arg, "arg%d", i);
+        add_attribute(prov_ptr, id, arg, argv[i]);
+        add_usedRecord(prov_ptr, act_id, id, NULL);
+    }
 
     id = add_entity(prov_ptr);
     add_attribute(prov_ptr, id, "type", "environment");

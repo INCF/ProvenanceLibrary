@@ -32,6 +32,7 @@ IDREF add_note(ProvPtr, IDREF annot);
 
 /* Relation routines */
 IDREF add_generationRecord(ProvPtr, IDREF entity, IDREF activity, const char* time);
+IDREF add_usedRecord(ProvPtr, IDREF activity, IDREF entity, const char* time);
 
 /* Record manipulation routines */
 int add_attribute(ProvPtr, IDREF, const char* key, const char* value);

@@ -245,6 +245,16 @@ IDREF add_generationRecord(ProvPtr p_prov, IDREF entity, IDREF activity, const c
     return(xmlGetProp(p_node, "id"));
 }
 
+IDREF add_usedRecord(ProvPtr p_prov, IDREF activity, IDREF entity, const char* time)
+{
+    xmlNodePtr p_node = add_element(p_prov, "relation", "used", NULL, "wub");
+    xmlSetProp(p_node, BAD_CAST "activity", BAD_CAST activity);
+    xmlSetProp(p_node, BAD_CAST "entity", BAD_CAST entity);
+    if (time != NULL)
+        xmlSetProp(p_node, BAD_CAST "time", BAD_CAST time);
+    return(xmlGetProp(p_node, "id"));
+}
+
 /* Record manipulation routines */
 
 /*
