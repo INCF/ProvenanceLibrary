@@ -1,100 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<opmx>
-  <element>
-    <entities>
-      <entity id="e0">
-        <type>input</type>
-        <arg1>-c</arg1>
-      </entity>
-      <entity id="e1">
-        <type>input</type>
-        <arg2>2</arg2>
-      </entity>
-      <entity id="e2">
-        <type>environment</type>
-        <FSL_BIN>/usr/local/fsl/bin</FSL_BIN>
-        <TERM_PROGRAM>Apple_Terminal</TERM_PROGRAM>
-        <FS_OVERRIDE>0</FS_OVERRIDE>
-        <SHELL>/bin/bash</SHELL>
-        <TERM>xterm-256color</TERM>
-        <ANTSPATH>/software/ANTS/</ANTSPATH>
-        <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
-        <FSLMULTIFILEQUIT>TRUE</FSLMULTIFILEQUIT>
-        <PERL5LIB>/Applications/freesurfer/mni/lib/../System/Library/Perl/5.8.6</PERL5LIB>
-        <Apple_PubSub_Socket_Render>/tmp/launch-P4iguB/Render</Apple_PubSub_Socket_Render>
-        <TERM_PROGRAM_VERSION>299</TERM_PROGRAM_VERSION>
-        <TERM_SESSION_ID>A97401D9-A413-45D5-B431-A6E00D5D16D1</TERM_SESSION_ID>
-        <OS>Darwin</OS>
-        <LOCAL_DIR>/Applications/freesurfer/local</LOCAL_DIR>
-        <USER>satra</USER>
-        <FSFAST_HOME>/Applications/freesurfer/fsfast</FSFAST_HOME>
-        <COMMAND_MODE>unix2003</COMMAND_MODE>
-        <MNI_PERL5LIB>/Applications/freesurfer/mni/lib/../System/Library/Perl/5.8.6</MNI_PERL5LIB>
-        <FMRI_ANALYSIS_DIR>/Applications/freesurfer/fsfast</FMRI_ANALYSIS_DIR>
-        <SSH_AUTH_SOCK>/tmp/launch-Sgj06F/Listeners</SSH_AUTH_SOCK>
-        <FSF_OUTPUT_FORMAT>nii.gz</FSF_OUTPUT_FORMAT>
-        <VIRTUAL_ENV>/software/virtualenvs.EPD/7.1/devpype</VIRTUAL_ENV>
-        <MINC_BIN_DIR>/Applications/freesurfer/mni/bin</MINC_BIN_DIR>
-        <WORKON_HOME>/software/virtualenvs.EPD/7.1</WORKON_HOME>
-        <SUBJECTS_DIR>/Applications/freesurfer/subjects</SUBJECTS_DIR>
-        <PATH>/software/virtualenvs.EPD/7.1/devpype/bin:/Users/satra/Library/Haskell/bin:/software/camino/bin:/Library/Frameworks/EPD64.framework/Versions/Current/bin:/usr/local/fsl/bin:/software/ANTS/:/Users/satra/local/bin:/Applications/freesurfer/bin:/Applications/freesurfer/fsfast/bin:/Applications/freesurfer/tktools:/usr/local/fsl/bin:/Applications/freesurfer/bin/freeview.app/Contents/MacOS/:/Applications/freesurfer/mni/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
-        <VIRTUALENVWRAPPER_HOOK_DIR>/software/virtualenvs.EPD/7.1</VIRTUALENVWRAPPER_HOOK_DIR>
-        <MKL_NUM_THREADS>2</MKL_NUM_THREADS>
-        <FSLMACHTYPE>apple-darwin11-gcc4.2</FSLMACHTYPE>
-        <PWD>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src</PWD>
-        <FUNCTIONALS_DIR>/Applications/freesurfer/sessions</FUNCTIONALS_DIR>
-        <LANG>en_US.UTF-8</LANG>
-        <FSLTCLSH>/usr/local/fsl/bin/fsltclsh</FSLTCLSH>
-        <FSLMACHINELIST></FSLMACHINELIST>
-        <MINC_LIB_DIR>/Applications/freesurfer/mni/lib</MINC_LIB_DIR>
-        <PS1>(devpype)[\u@\h \W$(__git_ps1 " (%s)")]\$ </PS1>
-        <FSLREMOTECALL></FSLREMOTECALL>
-        <FSLCONFDIR>/usr/local/fsl/config</FSLCONFDIR>
-        <FSLWISH>/usr/local/fsl/bin/fslwish</FSLWISH>
-        <HOME>/Users/satra</HOME>
-        <SHLVL>1</SHLVL>
-        <MNI_DIR>/Applications/freesurfer/mni</MNI_DIR>
-        <FREESURFER_HOME>/Applications/freesurfer</FREESURFER_HOME>
-        <DYLD_LIBRARY_PATH>/usr/local/lib/InsightToolkit-4.0/:/usr/local/lib/vtk-5.6/</DYLD_LIBRARY_PATH>
-        <LOGNAME>satra</LOGNAME>
-        <FSLDIR>/usr/local/fsl</FSLDIR>
-        <FIX_VERTEX_AREA></FIX_VERTEX_AREA>
-        <DISPLAY>/tmp/launch-36iSDO/org.macosforge.xquartz:0</DISPLAY>
-        <FSLLOCKDIR></FSLLOCKDIR>
-        <VIRTUALENVWRAPPER_LOG_DIR>/software/virtualenvs.EPD/7.1</VIRTUALENVWRAPPER_LOG_DIR>
-        <FSLOUTPUTTYPE>NIFTI_GZ</FSLOUTPUTTYPE>
-        <MNI_DATAPATH>/Applications/freesurfer/mni/data</MNI_DATAPATH>
-        <FSL_DIR>/usr/local/fsl</FSL_DIR>
-        <OLDPWD>/software/nipy-repo/nipype</OLDPWD>
-      </entity>
-      <entity id="e3">
-        <type>runtime</type>
-      </entity>
-      <entity id="e4">
-        <type>output:file</type>
-        <warped_file>/full/path/to/file</warped_file>
-      </entity>
-      <entity id="e5">
-        <type>output:stat</type>
-        <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
-      </entity>
-    </entities>
-    <activities>
-      <activity id="a0" startTime="11/30/11 00:13:20.650432 EST" endTime="11/30/11 00:13:20.650550 EST">
-        <type>prov:program</type>
-        <name>./testprov</name>
-        <version>1.0.0</version>
-        <cmdline>./testprov -c 2</cmdline>
-      </activity>
-    </activities>
-    <agents/>
-    <notes/>
-  </element>
-  <relation>
-    <used id="u0" activity="a0" entity="e0"/>
-    <used id="u1" activity="a0" entity="e1"/>
-    <wasGeneratedBy id="wgb0" entity="e4" activity="a0"/>
-    <wasGeneratedBy id="wgb1" entity="e5" activity="a0"/>
-  </relation>
-  <account/>
-</opmx>
+<record id="1">
+  <activity id="a0">
+    <startTime>11/30/11 00:13:20.650432 EST</startTime>
+    <endTime>11/30/11 00:13:20.650550 EST</endTime>
+    <type>program</type>
+    <name>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov</name>
+    <version>1.0.0</version>
+    <cmdline>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov -c 2 -m</cmdline>
+  </activity>
+  <entity id="e0">
+    <type>input</type>
+    <arg1>-c</arg1>
+  </entity>
+  <dependencies>
+    <used id="u0">
+      <effect ref="a0"/>
+      <cause ref="e0"/>
+    </used>
+    <used id="u1">
+      <effect ref="a0"/>
+      <cause ref="e1"/>
+    </used>
+    <used id="u2">
+      <effect ref="a0"/>
+      <cause ref="e2"/>
+    </used>
+    <wasGeneratedBy id="wgb0">
+      <effect ref="e5"/>
+      <cause ref="a0"/>
+    </wasGeneratedBy>
+    <wasGeneratedBy id="wgb1">
+      <effect ref="e6"/>
+      <cause ref="a0"/>
+    </wasGeneratedBy>
+  </dependencies>
+  <entity id="e1">
+    <type>input</type>
+    <arg2>2</arg2>
+  </entity>
+  <entity id="e2">
+    <type>input</type>
+    <arg3>-m</arg3>
+  </entity>
+  <entity id="e3">
+    <type>environment</type>
+    <PATH>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
+    <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
+    <LOGNAME>satra</LOGNAME>
+    <COMMAND_MODE>unix2003</COMMAND_MODE>
+    <DISPLAY>/tmp/launch-36iSDO/org.macosforge.xquartz:0</DISPLAY>
+    <Apple_PubSub_Socket_Render>/tmp/launch-P4iguB/Render</Apple_PubSub_Socket_Render>
+    <USER>satra</USER>
+    <SHELL>/bin/bash</SHELL>
+    <SSH_AUTH_SOCK>/tmp/launch-Sgj06F/Listeners</SSH_AUTH_SOCK>
+    <HOME>/Users/satra</HOME>
+  </entity>
+  <entity id="e4">
+    <type>runtime</type>
+  </entity>
+  <entity id="e5">
+    <type>output:file</type>
+    <warped_file>/full/path/to/file</warped_file>
+  </entity>
+  <entity id="e6">
+    <type>output:stat</type>
+    <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
+  </entity>
+</record>

@@ -1,9 +1,9 @@
-//
-//  testprov.c
-//  libprov
+//  Test routine for provenance library
+//  Requires:
+//     libprov
 //
 //  Created by Satrajit Ghosh on 11/25/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 TankThink Labs LLC. All rights reserved.
 //
 
 #include <stdio.h>
@@ -33,14 +33,14 @@ char * get_cmdline(int argc, char **argv){
 int
 main(int argc, char **argv, char** envp)
 {
-    ProvPtr prov_ptr = create_provenance_object(1);
+    ProvPtr prov_ptr = create_provenance_object("1");
     IDREF id, act_id;
     char arg[50];
     int i;
 
     // Add program information
     act_id = add_activity(prov_ptr, NULL, "11/30/11 00:13:20.650432 EST", "11/30/11 00:13:20.650550 EST");
-    add_attribute(prov_ptr, act_id, "type", "prov:program");
+    add_attribute(prov_ptr, act_id, "type", "program");
     add_attribute(prov_ptr, act_id, "name", argv[0]);
     add_attribute(prov_ptr, act_id, "version", version);
     char * cmdline = get_cmdline(argc, argv);
@@ -80,12 +80,12 @@ main(int argc, char **argv, char** envp)
     id = add_entity(prov_ptr);
     add_attribute(prov_ptr, id, "type", "output:file");
     add_attribute(prov_ptr, id, "warped_file", "/full/path/to/file");
-    add_generationRecord(prov_ptr, id, act_id, NULL);
+    add_generatedByRecord(prov_ptr, id, act_id, NULL);
 
     id = add_entity(prov_ptr);
     add_attribute(prov_ptr, id, "type", "output:stat");
     add_attribute(prov_ptr, id, "pearson_correlation_coefficient", ".234");
-    add_generationRecord(prov_ptr, id, act_id, NULL);
+    add_generatedByRecord(prov_ptr, id, act_id, NULL);
 
 
     print_provenance(prov_ptr, NULL);
