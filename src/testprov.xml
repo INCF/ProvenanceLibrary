@@ -15,35 +15,35 @@
     </entity>
     <dependencies>
       <used id="u0">
-        <effect ref="a0"/>
-        <cause ref="e0"/>
+        <activity ref="a0"/>
+        <entity ref="e0"/>
       </used>
       <used id="u1">
-        <effect ref="a0"/>
-        <cause ref="e1"/>
+        <activity ref="a0"/>
+        <entity ref="e2"/>
       </used>
       <used id="u2">
-        <effect ref="a0"/>
-        <cause ref="e2"/>
+        <activity ref="a0"/>
+        <entity ref="e4"/>
       </used>
       <wasGeneratedBy id="wgb0">
-        <effect ref="e5"/>
-        <cause ref="a0"/>
+        <entity ref="e8"/>
+        <activity ref="a0"/>
       </wasGeneratedBy>
       <wasGeneratedBy id="wgb1">
-        <effect ref="e6"/>
-        <cause ref="a0"/>
+        <entity ref="e10"/>
+        <activity ref="a0"/>
       </wasGeneratedBy>
     </dependencies>
-    <entity id="e1">
+    <entity id="e2">
       <type>input</type>
       <arg2>2</arg2>
     </entity>
-    <entity id="e2">
+    <entity id="e4">
       <type>input</type>
       <arg3>-m</arg3>
     </entity>
-    <entity id="e3">
+    <entity id="e6">
       <type>environment</type>
       <PATH>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
       <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
@@ -56,14 +56,14 @@
       <SSH_AUTH_SOCK>/tmp/launch-Sgj06F/Listeners</SSH_AUTH_SOCK>
       <HOME>/Users/satra</HOME>
     </entity>
-    <entity id="e4">
+    <entity id="e7">
       <type>runtime</type>
     </entity>
-    <entity id="e5">
+    <entity id="e8">
       <type>output:file</type>
       <warped_file>/full/path/to/file</warped_file>
     </entity>
-    <entity id="e6">
+    <entity id="e10">
       <type>output:stat</type>
       <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
     </entity>

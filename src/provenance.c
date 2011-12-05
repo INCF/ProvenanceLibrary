@@ -250,8 +250,8 @@ IDREF newNote(RecordPtr p_record)
 IDREF newUsedRecord(RecordPtr p_record, IDREF activity, IDREF entity, const char* time)
 {
     xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "used", "u");
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST activity);
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST entity);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "activity", NULL), BAD_CAST "ref", BAD_CAST activity);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "entity", NULL), BAD_CAST "ref", BAD_CAST entity);
     if (time != NULL)
         xmlNewChild(p_node, NULL, BAD_CAST "time", BAD_CAST time);
     return(xmlGetProp(p_node, "id"));
@@ -260,8 +260,8 @@ IDREF newUsedRecord(RecordPtr p_record, IDREF activity, IDREF entity, const char
 IDREF newGeneratedByRecord(RecordPtr p_record, IDREF entity, IDREF activity, const char* time)
 {
     xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasGeneratedBy", "wgb");
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST entity);
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST activity);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "entity", NULL), BAD_CAST "ref", BAD_CAST entity);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "activity", NULL), BAD_CAST "ref", BAD_CAST activity);
     if (time != NULL)
         xmlNewChild(p_node, NULL, BAD_CAST "time", BAD_CAST time);
     return(xmlGetProp(p_node, "id"));
@@ -270,8 +270,8 @@ IDREF newGeneratedByRecord(RecordPtr p_record, IDREF entity, IDREF activity, con
 IDREF newControlledByRecord(RecordPtr p_record, IDREF activity, IDREF agent, const char* startTime, const char* endTime)
 {
     xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasControlledBy", "wcb");
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST activity);
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST agent);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "activity", NULL), BAD_CAST "ref", BAD_CAST activity);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "agent", NULL), BAD_CAST "ref", BAD_CAST agent);
     if (startTime != NULL)
         xmlNewChild(p_node, NULL, BAD_CAST "startTime", BAD_CAST startTime);
     if (endTime != NULL)
@@ -282,18 +282,34 @@ IDREF newControlledByRecord(RecordPtr p_record, IDREF activity, IDREF agent, con
 IDREF newDerivedFromRecord(RecordPtr p_record, IDREF entity_effect, IDREF entity_cause)
 {
     xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasDerivedFrom", "wdf");
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST entity_effect);
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST entity_cause);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "entity_effect", NULL), BAD_CAST "ref", BAD_CAST entity_effect);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "entity_cause", NULL), BAD_CAST "ref", BAD_CAST entity_cause);
     return(xmlGetProp(p_node, "id"));
 }
 
 IDREF newInformedByRecord(RecordPtr p_record, IDREF activity_effect, IDREF activity_cause, const char* time)
 {
     xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasInformedBy", "wib");
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST activity_effect);
-    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST activity_cause);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "activity_effect", NULL), BAD_CAST "ref", BAD_CAST activity_effect);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "activity_cause", NULL), BAD_CAST "ref", BAD_CAST activity_cause);
     if (time != NULL)
         xmlNewChild(p_node, NULL, BAD_CAST "time", BAD_CAST time);
+    return(xmlGetProp(p_node, "id"));
+}
+
+IDREF newComplementOfRecord(RecordPtr p_record, IDREF entity_effect, IDREF entity_cause)
+{
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasComplementOf", "wco");
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "entity_effect", NULL), BAD_CAST "ref", BAD_CAST entity_effect);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "entity_cause", NULL), BAD_CAST "ref", BAD_CAST entity_cause);
+    return(xmlGetProp(p_node, "id"));
+}
+
+IDREF newAssociatedWithRecord(RecordPtr p_record, IDREF activity, IDREF agent, const char* startTime, const char* endTime)
+{
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasAssociatedWith", "waw");
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "activity", NULL), BAD_CAST "ref", BAD_CAST activity);
+    xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "agent", NULL), BAD_CAST "ref", BAD_CAST agent);
     return(xmlGetProp(p_node, "id"));
 }
 

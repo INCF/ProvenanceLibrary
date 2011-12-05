@@ -37,6 +37,8 @@ IDREF newUsedRecord(RecordPtr p_rec, IDREF activity, IDREF entity, const char* t
 IDREF newGeneratedByRecord(RecordPtr p_rec, IDREF entity, IDREF activity, const char* time);
 IDREF newControlledByRecord(RecordPtr p_rec, IDREF activity, IDREF agent, const char* startTime, const char* endTime);
 IDREF newDerivedFromRecord(RecordPtr p_rec, IDREF entity_effect, IDREF entity_cause);
+IDREF newComplementOfRecord(RecordPtr p_rec, IDREF entity_effect, IDREF entity_cause);
+IDREF newAssociatedWithRecord(RecordPtr p_record, IDREF activity, IDREF agent, const char* startTime, const char* endTime);
 IDREF newInformedByRecord(RecordPtr p_rec, IDREF activity_effect, IDREF activity_cause, const char* time);
 IDREF newHasAnnotationRecord(RecordPtr p_rec, IDREF thing, IDREF note);
 
