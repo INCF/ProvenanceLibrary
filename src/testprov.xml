@@ -1,69 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<record id="1">
-  <activity id="a0">
-    <startTime>11/30/11 00:13:20.650432 EST</startTime>
-    <endTime>11/30/11 00:13:20.650550 EST</endTime>
-    <type>program</type>
-    <name>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov</name>
-    <version>1.0.0</version>
-    <cmdline>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov -c 2 -m</cmdline>
-  </activity>
-  <entity id="e0">
-    <type>input</type>
-    <arg1>-c</arg1>
-  </entity>
-  <dependencies>
-    <used id="u0">
-      <effect ref="a0"/>
-      <cause ref="e0"/>
-    </used>
-    <used id="u1">
-      <effect ref="a0"/>
-      <cause ref="e1"/>
-    </used>
-    <used id="u2">
-      <effect ref="a0"/>
-      <cause ref="e2"/>
-    </used>
-    <wasGeneratedBy id="wgb0">
-      <effect ref="e5"/>
-      <cause ref="a0"/>
-    </wasGeneratedBy>
-    <wasGeneratedBy id="wgb1">
-      <effect ref="e6"/>
-      <cause ref="a0"/>
-    </wasGeneratedBy>
-  </dependencies>
-  <entity id="e1">
-    <type>input</type>
-    <arg2>2</arg2>
-  </entity>
-  <entity id="e2">
-    <type>input</type>
-    <arg3>-m</arg3>
-  </entity>
-  <entity id="e3">
-    <type>environment</type>
-    <PATH>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
-    <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
-    <LOGNAME>satra</LOGNAME>
-    <COMMAND_MODE>unix2003</COMMAND_MODE>
-    <DISPLAY>/tmp/launch-36iSDO/org.macosforge.xquartz:0</DISPLAY>
-    <Apple_PubSub_Socket_Render>/tmp/launch-P4iguB/Render</Apple_PubSub_Socket_Render>
-    <USER>satra</USER>
-    <SHELL>/bin/bash</SHELL>
-    <SSH_AUTH_SOCK>/tmp/launch-Sgj06F/Listeners</SSH_AUTH_SOCK>
-    <HOME>/Users/satra</HOME>
-  </entity>
-  <entity id="e4">
-    <type>runtime</type>
-  </entity>
-  <entity id="e5">
-    <type>output:file</type>
-    <warped_file>/full/path/to/file</warped_file>
-  </entity>
-  <entity id="e6">
-    <type>output:stat</type>
-    <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
-  </entity>
-</record>
+<container xmlns="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:incf="http://incf.org/incf-schema" id="1">
+  <record>
+    <activity id="a0">
+      <startTime>11/30/11 00:13:20.650432 EST</startTime>
+      <endTime>11/30/11 00:13:20.650550 EST</endTime>
+      <type>program</type>
+      <name>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov</name>
+      <version>1.0.0</version>
+      <cmdline>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov -c 2 -m</cmdline>
+    </activity>
+    <entity id="e0">
+      <type>input</type>
+      <arg1>-c</arg1>
+    </entity>
+    <dependencies>
+      <used id="u0">
+        <effect ref="a0"/>
+        <cause ref="e0"/>
+      </used>
+      <used id="u1">
+        <effect ref="a0"/>
+        <cause ref="e1"/>
+      </used>
+      <used id="u2">
+        <effect ref="a0"/>
+        <cause ref="e2"/>
+      </used>
+      <wasGeneratedBy id="wgb0">
+        <effect ref="e5"/>
+        <cause ref="a0"/>
+      </wasGeneratedBy>
+      <wasGeneratedBy id="wgb1">
+        <effect ref="e6"/>
+        <cause ref="a0"/>
+      </wasGeneratedBy>
+    </dependencies>
+    <entity id="e1">
+      <type>input</type>
+      <arg2>2</arg2>
+    </entity>
+    <entity id="e2">
+      <type>input</type>
+      <arg3>-m</arg3>
+    </entity>
+    <entity id="e3">
+      <type>environment</type>
+      <PATH>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
+      <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
+      <LOGNAME>satra</LOGNAME>
+      <COMMAND_MODE>unix2003</COMMAND_MODE>
+      <DISPLAY>/tmp/launch-36iSDO/org.macosforge.xquartz:0</DISPLAY>
+      <Apple_PubSub_Socket_Render>/tmp/launch-P4iguB/Render</Apple_PubSub_Socket_Render>
+      <USER>satra</USER>
+      <SHELL>/bin/bash</SHELL>
+      <SSH_AUTH_SOCK>/tmp/launch-Sgj06F/Listeners</SSH_AUTH_SOCK>
+      <HOME>/Users/satra</HOME>
+    </entity>
+    <entity id="e4">
+      <type>runtime</type>
+    </entity>
+    <entity id="e5">
+      <type>output:file</type>
+      <warped_file>/full/path/to/file</warped_file>
+    </entity>
+    <entity id="e6">
+      <type>output:stat</type>
+      <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
+    </entity>
+  </record>
+</container>

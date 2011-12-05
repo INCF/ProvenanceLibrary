@@ -1,4 +1,4 @@
-CC=gcc
+CC=gcc -g
 CFLAGS=-I /usr/include/libxml2
 LDFLAGS=-L. -lprov
 

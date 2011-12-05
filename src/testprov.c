@@ -33,31 +33,32 @@ char * get_cmdline(int argc, char **argv){
 int
 main(int argc, char **argv, char** envp)
 {
-    ProvPtr prov_ptr = create_provenance_object("1");
+    ProvPtr p_prov = newProvenanceFactory("1");
+    RecordPtr p_record = newRecord(p_prov);
     IDREF id, act_id;
     char arg[50];
     int i;
 
     // Add program information
-    act_id = add_activity(prov_ptr, NULL, "11/30/11 00:13:20.650432 EST", "11/30/11 00:13:20.650550 EST");
-    add_attribute(prov_ptr, act_id, "type", "program");
-    add_attribute(prov_ptr, act_id, "name", argv[0]);
-    add_attribute(prov_ptr, act_id, "version", version);
+    act_id = newActivity(p_record, NULL, "11/30/11 00:13:20.650432 EST", "11/30/11 00:13:20.650550 EST");
+    add_attribute(p_record, act_id, "type", "program");
+    add_attribute(p_record, act_id, "name", argv[0]);
+    add_attribute(p_record, act_id, "version", version);
     char * cmdline = get_cmdline(argc, argv);
-    add_attribute(prov_ptr, act_id, "cmdline", cmdline);
+    add_attribute(p_record, act_id, "cmdline", cmdline);
     free(cmdline);
 
     //Add all input parameters. if you use getopt this can be refined further
     for(i=1;i<argc; i++){
-        id = add_entity(prov_ptr);
-        add_attribute(prov_ptr, id, "type", "input");
+        id = newEntity(p_record);
+        add_attribute(p_record, id, "type", "input");
         sprintf(arg, "arg%d", i);
-        add_attribute(prov_ptr, id, arg, argv[i]);
-        add_usedRecord(prov_ptr, act_id, id, NULL);
+        add_attribute(p_record, id, arg, argv[i]);
+        newUsedRecord(p_record, act_id, id, NULL);
     }
 
-    id = add_entity(prov_ptr);
-    add_attribute(prov_ptr, id, "type", "environment");
+    id = newEntity(p_record);
+    add_attribute(p_record, id, "type", "environment");
     // add all environment variables
     char** env;
     for (env = envp; *env != 0; env++)
@@ -69,27 +70,27 @@ main(int argc, char **argv, char** envp)
        while (thisEnv[pos++] != '=');
        name = strndup(thisEnv, pos-1);
        if (name[0] != '_')
-           add_attribute(prov_ptr, id, name, &thisEnv[pos]);
+           add_attribute(p_record, id, name, &thisEnv[pos]);
        free(name);
     }
 
-    id = add_entity(prov_ptr);
-    add_attribute(prov_ptr, id, "type", "runtime");
+    id = newEntity(p_record);
+    add_attribute(p_record, id, "type", "runtime");
     // add runtime info such as walltime, cputime, host,
 
-    id = add_entity(prov_ptr);
-    add_attribute(prov_ptr, id, "type", "output:file");
-    add_attribute(prov_ptr, id, "warped_file", "/full/path/to/file");
-    add_generatedByRecord(prov_ptr, id, act_id, NULL);
+    id = newEntity(p_record);
+    add_attribute(p_record, id, "type", "output:file");
+    add_attribute(p_record, id, "warped_file", "/full/path/to/file");
+    newGeneratedByRecord(p_record, id, act_id, NULL);
 
-    id = add_entity(prov_ptr);
-    add_attribute(prov_ptr, id, "type", "output:stat");
-    add_attribute(prov_ptr, id, "pearson_correlation_coefficient", ".234");
-    add_generatedByRecord(prov_ptr, id, act_id, NULL);
+    id = newEntity(p_record);
+    add_attribute(p_record, id, "type", "output:stat");
+    add_attribute(p_record, id, "pearson_correlation_coefficient", ".234");
+    newGeneratedByRecord(p_record, id, act_id, NULL);
 
 
-    print_provenance(prov_ptr, NULL);
-    print_provenance(prov_ptr, "testprov.xml");
-    destroy_provenance_object(prov_ptr);
+    print_provenance(p_prov, NULL);
+    print_provenance(p_prov, "testprov.xml");
+    delProvenanceFactory(p_prov);
     return(0);
 }

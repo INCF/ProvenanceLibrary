@@ -42,7 +42,7 @@ typedef XPathQuery *XPathQueryPtr;
 Create a provenance object that can be used by a client to generate an
 instance of a provenance schema
 */
-ProvPtr create_provenance_object(const char* id)
+ProvPtr newProvenanceFactory(const char* id)
 {
     //fprintf(stdout, "Creating provenance object [BEGIN]\n");
     LIBXML_TEST_VERSION;
@@ -58,9 +58,15 @@ ProvPtr create_provenance_object(const char* id)
 
     PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
     p_priv->doc = xmlNewDoc(BAD_CAST "1.0");
-    xmlNodePtr root_node = xmlNewNode(NULL, BAD_CAST "record");
+    xmlNodePtr root_node = xmlNewNode(NULL, BAD_CAST "container");
     xmlSetProp(root_node, BAD_CAST "id", BAD_CAST id);
     xmlDocSetRootElement(p_priv->doc, root_node);
+    xmlNewNs(root_node, "http://openprovenance.org/prov-xml#", NULL);
+    xmlNewNs(root_node, "http://www.w3.org/2001/XMLSchema-instance", "xsi");
+    xmlNewNs(root_node, "http://www.w3.org/2001/XMLSchema", "xsd");
+    xmlNewNs(root_node, "http://openprovenance.org/prov-xml#", "prov");
+    xmlNewNs(root_node, "http://incf.org/incf-schema", "incf");
+
     //fprintf(stdout, "Creating provenance object [END]\n");
     return(p_prov);
 }
@@ -68,7 +74,7 @@ ProvPtr create_provenance_object(const char* id)
 /*
 Clean up the memory used by the xml document
 */
-int destroy_provenance_object(ProvPtr p_prov)
+int delProvenanceFactory(ProvPtr p_prov)
 {
     assert(p_prov);
     //fprintf(stdout, "Destroying provenance object [BEGIN]\n");
@@ -153,56 +159,74 @@ static int free_xpquery(XPathQueryPtr p_xpquery){
 /*
 Generic element adding routine
 */
-static xmlNodePtr add_element(ProvPtr p_prov,
+static xmlNodePtr add_element(xmlNodePtr p_record,
                               const char* root,
                               const char* element_name,
                               const char* id_prefix)
 {
-    PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
     xmlNodePtr p_node, root_node;
     xmlChar id[255];
-    int size;
+    int size1, size2;
     xmlChar xpathExpr[255];
 
-    sprintf(xpathExpr, "//%s/%s", root, element_name);
-    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc,
+    if (root == NULL)
+        sprintf(xpathExpr, "//%s", element_name);
+    else
+        sprintf(xpathExpr, "//%s/%s", root, element_name);
+    XPathQueryPtr p_xpquery = query_xpath(p_record->doc,
                                           xpathExpr);
 
-    size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
+    size1 = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
     free_xpquery(p_xpquery);
 
-    assert(id_prefix);
-    sprintf(id, "%s%d", id_prefix, size);
+    if (root != NULL){
+        sprintf(xpathExpr, "//%s", root);
+        p_xpquery = query_xpath(p_record->doc, xpathExpr);
 
-    sprintf(xpathExpr, "//%s", root);
-    p_xpquery = query_xpath(p_priv->doc, xpathExpr);
-
-    size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
-    if (size == 0)
-        root_node = xmlNewChild(xmlDocGetRootElement(p_priv->doc), NULL, BAD_CAST root, NULL);
+        size2 = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
+        if (size2 == 0)
+            root_node = xmlNewChild(p_record, NULL, BAD_CAST root, NULL);
+        else
+            root_node = p_xpquery->xpathObj->nodesetval->nodeTab[0];
+        free_xpquery(p_xpquery);
+    }
     else
-        root_node = p_xpquery->xpathObj->nodesetval->nodeTab[0];
-    free_xpquery(p_xpquery);
+        root_node = p_record;
 
-    //fprintf(stdout, "%s:", id);
     p_node = xmlNewChild(root_node, NULL, BAD_CAST element_name, NULL);
-    xmlNewProp(p_node, BAD_CAST "id", BAD_CAST id);
-
+    //fprintf(stdout, "%s:", id);
+    if (id_prefix != NULL){
+        sprintf(id, "%s%d", id_prefix, size1);
+        xmlNewProp(p_node, BAD_CAST "id", BAD_CAST id);
+    }
     return p_node;
 }
 
 /* Record creation routines */
 
-IDREF add_entity(ProvPtr p_prov)
+RecordPtr newRecord(ProvPtr p_prov)
 {
-    xmlNodePtr p_node = add_element(p_prov, "record", "entity", "e");
-    return(xmlGetProp(p_node, "id"));
+    assert(p_prov);
+    PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
+    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/container");
+
+    int size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
+    if (size != 1){
+        fprintf(stderr, "No container element found or multiple elements found\n");
+        return NULL;
+    }
+    return (RecordPtr)add_element(p_xpquery->xpathObj->nodesetval->nodeTab[0], NULL, BAD_CAST "record", NULL);
 }
 
-IDREF add_activity(ProvPtr p_prov, const char* recipeLink,
+IDREF newEntity(RecordPtr p_record)
+{
+    return(xmlGetProp(add_element((xmlNodePtr)p_record, NULL, "entity", "e"), "id"));
+}
+
+IDREF newActivity(RecordPtr p_record, const char* recipeLink,
                    const char* startTime, const char* endTime)
 {
-    xmlNodePtr p_node = add_element(p_prov, "record", "activity", "a");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, NULL, "activity", "a");
     if (startTime != NULL)
         xmlNewChild(p_node, NULL, BAD_CAST "startTime", BAD_CAST startTime);
     if (endTime != NULL)
@@ -210,22 +234,22 @@ IDREF add_activity(ProvPtr p_prov, const char* recipeLink,
     return(xmlGetProp(p_node, "id"));
 }
 
-IDREF add_agent(ProvPtr p_prov)
+IDREF newAgent(RecordPtr p_record)
 {
-    xmlNodePtr p_node = add_element(p_prov, "record", "agent", "ag");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, NULL, "agent", "ag");
     return(xmlGetProp(p_node, "id"));
 }
 
-IDREF add_note(ProvPtr p_prov)
+IDREF newNote(RecordPtr p_record)
 {
-    xmlNodePtr p_node = add_element(p_prov, "record", "note", "n");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, NULL, "note", "n");
     return(xmlGetProp(p_node, "id"));
 }
 
 /* add relations */
-IDREF add_usedRecord(ProvPtr p_prov, IDREF activity, IDREF entity, const char* time)
+IDREF newUsedRecord(RecordPtr p_record, IDREF activity, IDREF entity, const char* time)
 {
-    xmlNodePtr p_node = add_element(p_prov, "dependencies", "used", "u");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "used", "u");
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST activity);
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST entity);
     if (time != NULL)
@@ -233,9 +257,9 @@ IDREF add_usedRecord(ProvPtr p_prov, IDREF activity, IDREF entity, const char* t
     return(xmlGetProp(p_node, "id"));
 }
 
-IDREF add_generatedByRecord(ProvPtr p_prov, IDREF entity, IDREF activity, const char* time)
+IDREF newGeneratedByRecord(RecordPtr p_record, IDREF entity, IDREF activity, const char* time)
 {
-    xmlNodePtr p_node = add_element(p_prov, "dependencies", "wasGeneratedBy", "wgb");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasGeneratedBy", "wgb");
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST entity);
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST activity);
     if (time != NULL)
@@ -243,9 +267,9 @@ IDREF add_generatedByRecord(ProvPtr p_prov, IDREF entity, IDREF activity, const 
     return(xmlGetProp(p_node, "id"));
 }
 
-IDREF add_controlledByRecord(ProvPtr p_prov, IDREF activity, IDREF agent, const char* startTime, const char* endTime)
+IDREF newControlledByRecord(RecordPtr p_record, IDREF activity, IDREF agent, const char* startTime, const char* endTime)
 {
-    xmlNodePtr p_node = add_element(p_prov, "dependencies", "wasControlledBy", "wcb");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasControlledBy", "wcb");
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST activity);
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST agent);
     if (startTime != NULL)
@@ -255,17 +279,17 @@ IDREF add_controlledByRecord(ProvPtr p_prov, IDREF activity, IDREF agent, const 
     return(xmlGetProp(p_node, "id"));
 }
 
-IDREF add_DerivedFromRecord(ProvPtr p_prov, IDREF entity_effect, IDREF entity_cause)
+IDREF newDerivedFromRecord(RecordPtr p_record, IDREF entity_effect, IDREF entity_cause)
 {
-    xmlNodePtr p_node = add_element(p_prov, "dependencies", "wasDerivedFrom", "wdf");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasDerivedFrom", "wdf");
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST entity_effect);
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST entity_cause);
     return(xmlGetProp(p_node, "id"));
 }
 
-IDREF add_informedByRecord(ProvPtr p_prov, IDREF activity_effect, IDREF activity_cause, const char* time)
+IDREF newInformedByRecord(RecordPtr p_record, IDREF activity_effect, IDREF activity_cause, const char* time)
 {
-    xmlNodePtr p_node = add_element(p_prov, "dependencies", "wasInformedBy", "wib");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "wasInformedBy", "wib");
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "effect", NULL), BAD_CAST "ref", BAD_CAST activity_effect);
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "cause", NULL), BAD_CAST "ref", BAD_CAST activity_cause);
     if (time != NULL)
@@ -273,9 +297,9 @@ IDREF add_informedByRecord(ProvPtr p_prov, IDREF activity_effect, IDREF activity
     return(xmlGetProp(p_node, "id"));
 }
 
-IDREF add_hasAnnotationRecord(ProvPtr p_prov, IDREF thing, IDREF note)
+IDREF newHasAnnotationRecord(RecordPtr p_record, IDREF thing, IDREF note)
 {
-    xmlNodePtr p_node = add_element(p_prov, "dependencies", "hasAnnotation", "ha");
+    xmlNodePtr p_node = add_element((xmlNodePtr)p_record, "dependencies", "hasAnnotation", "ha");
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "thing", NULL), BAD_CAST "ref", BAD_CAST thing);
     xmlSetProp(xmlNewChild(p_node, NULL, BAD_CAST "note", NULL), BAD_CAST "ref", BAD_CAST note);
     return(xmlGetProp(p_node, "id"));
@@ -286,12 +310,11 @@ IDREF add_hasAnnotationRecord(ProvPtr p_prov, IDREF thing, IDREF note)
 /*
 Add key value attributes to an element with given id
 */
-int add_attribute(ProvPtr p_prov, const char* id, const char* key, const char* value)
+int add_attribute(RecordPtr p_record, const char* id, const char* key, const char* value)
 {
-    PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
     xmlChar xpathExpr[128];
     sprintf(xpathExpr, "//*[@id='%s']", id);
-    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc,
+    XPathQueryPtr p_xpquery = query_xpath(((xmlNodePtr)p_record)->doc,
                                           xpathExpr);
     int size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
     //fprintf(stdout, "xpath[%s]:numnodes[%d]\n", xpathExpr, size);
@@ -320,12 +343,11 @@ int add_attribute(ProvPtr p_prov, const char* id, const char* key, const char* v
 /*
 Sets properties of an element
 */
-int set_property(ProvPtr p_prov, IDREF id, const char* name, const char* value)
+int set_property(RecordPtr p_record, IDREF id, const char* name, const char* value)
 {
-    PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
     xmlChar xpathExpr[128];
     sprintf(xpathExpr, "//*[@id='%s']", id);
-    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc,
+    XPathQueryPtr p_xpquery = query_xpath(((xmlNodePtr)p_record)->doc,
                                           xpathExpr);
     int size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
     //fprintf(stdout, "xpath[%s]:numnodes[%d]\n", xpathExpr, size);
