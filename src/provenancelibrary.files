@@ -1,3 +1,6 @@
 /Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/provenance.c
 /Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/provenance.h
 /Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov.c
+neuroprovenance.h
+neuroprovenance.c
+testneuroprov.c

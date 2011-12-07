@@ -1,15 +1,23 @@
 CC=gcc -g
-CFLAGS=-I /usr/include/libxml2
-LDFLAGS=-L. -lprov
+CFLAGS=-c -fPIC -I /usr/include/libxml2
 
-all: testprov
+all: testprov testneuroprov
 
 library.dylib:
-	$(CC) -c -fPIC $(CFLAGS) provenance.c
+	$(CC) $(CFLAGS) provenance.c
 	$(CC) -shared -lxml2 -o libprov.so provenance.o
 
+neuroprovlibrary.dylib:
+	$(CC) $(CFLAGS) provenance.c
+	$(CC) $(CFLAGS) neuroprovenance.c
+	$(CC) -shared -lxml2 -o libneuroprov.so neuroprovenance.o provenance.o
+
 testprov: library.dylib
-	$(CC) ${LDFLAGS} testprov.c -o testprov
+	$(CC) -L. -lprov testprov.c -o testprov
+
+testneuroprov: neuroprovlibrary.dylib
+	$(CC) -L. -lneuroprov testneuroprov.c -o testneuroprov
 
 clean:
-	rm -f *.o *.so testprov
+	rm -f *.o *.so testprov testneuroprov
+

@@ -68,6 +68,7 @@ ProvPtr newProvenanceFactory(const char* id)
     xmlNewNs(root_node, "http://incf.org/incf-schema", "incf");
 
     //fprintf(stdout, "Creating provenance object [END]\n");
+    p_prov->p_record = (void *)newRecord(p_prov);
     return(p_prov);
 }
 
@@ -98,6 +99,15 @@ int delProvenanceFactory(ProvPtr p_prov)
     free(p_prov);
     //fprintf(stdout, "Destroying provenance object [END]\n");
 
+    return(0);
+}
+
+int addNamespace(ProvPtr p_prov, const char* href, const char* prefix)
+{
+    assert(p_prov);
+    PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
+    xmlNodePtr root_node = xmlDocGetRootElement(p_priv->doc);
+    xmlNewNs(root_node, href, prefix);
     return(0);
 }
 
@@ -215,7 +225,7 @@ RecordPtr newRecord(ProvPtr p_prov)
         fprintf(stderr, "No container element found or multiple elements found\n");
         return NULL;
     }
-    return (RecordPtr)add_element(p_xpquery->xpathObj->nodesetval->nodeTab[0], NULL, BAD_CAST "record", NULL);
+    return (RecordPtr)add_element(p_xpquery->xpathObj->nodesetval->nodeTab[0], NULL, BAD_CAST "records", NULL);
 }
 
 IDREF newEntity(RecordPtr p_record)
@@ -324,9 +334,9 @@ IDREF newHasAnnotationRecord(RecordPtr p_record, IDREF thing, IDREF note)
 /* Record manipulation routines */
 
 /*
-Add key value attributes to an element with given id
+Add key value elements with given id
 */
-int add_attribute(RecordPtr p_record, const char* id, const char* key, const char* value)
+int add_child_element(RecordPtr p_record, const char* id, const char* key, const char* value)
 {
     xmlChar xpathExpr[128];
     sprintf(xpathExpr, "//*[@id='%s']", id);
@@ -357,9 +367,9 @@ int add_attribute(RecordPtr p_record, const char* id, const char* key, const cha
 }
 
 /*
-Sets properties of an element
+Sets attributes of an element
 */
-int set_property(RecordPtr p_record, IDREF id, const char* name, const char* value)
+int add_attribute(RecordPtr p_record, IDREF id, const char* name, const char* value)
 {
     xmlChar xpathExpr[128];
     sprintf(xpathExpr, "//*[@id='%s']", id);

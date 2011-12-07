@@ -34,7 +34,7 @@ int
 main(int argc, char **argv, char** envp)
 {
     ProvPtr p_prov = newProvenanceFactory("1");
-    RecordPtr p_record = newRecord(p_prov);
+    RecordPtr p_record = p_prov->p_record;
     IDREF id, act_id;
     char arg[50];
     int i;

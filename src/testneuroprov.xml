@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<container xmlns="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:incf="http://incf.org/incf-schema" id="1">
+<container xmlns="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:incf="http://incf.org/incf-schema" xmlns:ni="http://incf.org/provenance/terms/ni" id="BET">
   <records>
     <activity id="a0">
       <startTime>11/30/11 00:13:20.650432 EST</startTime>
       <endTime>11/30/11 00:13:20.650550 EST</endTime>
-      <type>program</type>
-      <name>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testneuroprov</name>
-      <version>1.0.0</version>
+      <type>ni:brain_extraction</type>
       <cmdline>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testneuroprov -c 2</cmdline>
+      <program>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testneuroprov</program>
+      <version>1.0.0</version>
     </activity>
     <entity id="e0">
-      <type>input</type>
-      <arg1>-c</arg1>
+      <type>ni:input</type>
+      <name>arg1</name>
+      <value>-c</value>
     </entity>
     <dependencies>
       <used id="u0">
@@ -23,20 +24,21 @@
         <entity ref="e2"/>
       </used>
       <wasGeneratedBy id="wgb0">
-        <entity ref="e6"/>
+        <entity ref="e5"/>
         <activity ref="a0"/>
       </wasGeneratedBy>
       <wasGeneratedBy id="wgb1">
-        <entity ref="e8"/>
+        <entity ref="e7"/>
         <activity ref="a0"/>
       </wasGeneratedBy>
     </dependencies>
     <entity id="e2">
-      <type>input</type>
-      <arg2>2</arg2>
+      <type>ni:input</type>
+      <name>arg2</name>
+      <value>2</value>
     </entity>
     <entity id="e4">
-      <type>environment</type>
+      <type>ni:environ</type>
       <PATH>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
       <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
       <LOGNAME>satra</LOGNAME>
@@ -49,15 +51,16 @@
       <HOME>/Users/satra</HOME>
     </entity>
     <entity id="e5">
-      <type>runtime</type>
+      <type>ni:output</type>
+      <name>warped_file</name>
+      <value>/full/path/to/file</value>
+      <type>ni:normalized</type>
     </entity>
-    <entity id="e6">
-      <type>output:file</type>
-      <warped_file>/full/path/to/file</warped_file>
-    </entity>
-    <entity id="e8">
-      <type>output:stat</type>
-      <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
+    <entity id="e7">
+      <type>ni:output</type>
+      <name>pearson_correlation_coefficient</name>
+      <value>.234</value>
+      <type>ni:statistic</type>
     </entity>
   </records>
 </container>
