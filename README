@@ -1,15 +1,59 @@
 Prototype implementation of the W3C Provenance Data Model
+=========================================================
 
-Data model description
+The src directory contains a C prototype library for implementing the W3C
+provenance schema. Please note that the schema is a work in progress. We will
+continue to monitor and improve the implementation.
 
-http://dvcs.w3.org/hg/prov/raw-file/0f43d8bc798c/model/ProvenanceModel.html
+We have derived a neuroprov library based on the prototype C library to enable
+easier construction of W3C-Prov compatible provenance for neuroimaging
+applications. Concurrent with this implementation we are developing a set of
+terms for use in neuroimaging applications. The current list is at:
 
-Ontology description
+https://github.com/INCF/ProvenanceLibrary/wiki/terms
 
-http://dvcs.w3.org/hg/prov/raw-file/default/ontology/ProvenanceFormalModel.html
+Please feel free to contribute new terms and definitions. We want this to evolve
+into a process ontology that will then be hosted under a broader ontology.
 
+A demo program in C is available.
 
-Compiler requirements
+W3C Prov Working Group descriptions
+-----------------------------------
+
+Click on raw to get rendered html
+
+Data model
+~~~~~~~~~~
+
+http://dvcs.w3.org/hg/prov/file/tip/model/ProvenanceModel.html
+
+Ontology
+~~~~~~~~
+
+http://dvcs.w3.org/hg/prov/file/tip/ontology/ProvenanceFormalModel.html
+
+Upstream schema
+~~~~~~~~~~~~~~~
+
+https://github.com/lucmoreau/ProvToolbox/blob/master/xml/src/main/resources/prov-20111110.xsd
+
+Install
+-------
+
+Requirements
+~~~~~~~~~~~~
 
 gcc
+
 libxml2
+
+Install
+~~~~~~~
+
+make
+
+Test
+~~~~
+
+./testprov -flag 1
+./testneuroprov -flag 1
