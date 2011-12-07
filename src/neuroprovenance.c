@@ -10,7 +10,7 @@ ProvObjectPtr newProvenanceObject(const char* id)
 {
     ProvPtr p_prov = newProvenanceFactory(id);
     // add new namespace
-    addNamespace(p_prov, "http://incf.org/provenance/terms/ni", "ni");
+    addNamespace(p_prov, "https://github.com/INCF/ProvenanceLibrary/wiki/terms", "ni");
     return((ProvObjectPtr)p_prov);
 }
 
