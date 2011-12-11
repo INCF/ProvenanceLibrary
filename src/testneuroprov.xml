@@ -53,7 +53,7 @@
     <entity id="e5">
       <type>ni:output</type>
       <path>./testneuroprov.c</path>
-      <md5sum>149ea5b4a660a06baa4164526f5f640c</md5sum>
+      <md5sum>fb9a1c66b0a65c5cecda9b69052f1078</md5sum>
       <name>warped_file</name>
       <type>ni:normalized</type>
     </entity>
