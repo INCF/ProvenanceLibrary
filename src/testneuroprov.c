@@ -44,12 +44,12 @@ main(int argc, char **argv, char** envp)
 
     addAllEnvironVariables(p_prov, p_proc, envp);
 
-    //id = newEntity(p_record);
-    //add_attribute(p_record, id, "type", "runtime");
-    // add runtime info such as walltime, cputime, host,
+    // [TODO]: add runtime info such as walltime, cputime, host,
 
-    id = newProcessOutput(p_prov, p_proc, "warped_file", "/full/path/to/file", "ni:output");
+    id = newFile(p_prov, "./testneuroprov.c", "ni:output");
+    addKeyValuePair(p_prov, id, "name", "warped_file");
     addType(p_prov, id, "ni:normalized");
+    addOutput(p_prov, p_proc, id);
 
     id = newProcessOutput(p_prov, p_proc, "pearson_correlation_coefficient", ".234", "ni:output");
     addType(p_prov, id, "ni:statistic");

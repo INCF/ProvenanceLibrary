@@ -10,7 +10,7 @@ library.dylib:
 neuroprovlibrary.dylib:
 	$(CC) $(CFLAGS) provenance.c
 	$(CC) $(CFLAGS) neuroprovenance.c
-	$(CC) -shared -lxml2 -o libneuroprov.so neuroprovenance.o provenance.o
+	$(CC) -shared -lxml2 -lcrypto -o libneuroprov.so neuroprovenance.o provenance.o
 
 testprov: library.dylib
 	$(CC) -L. -lprov testprov.c -o testprov
