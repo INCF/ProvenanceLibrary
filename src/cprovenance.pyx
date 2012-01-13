@@ -1,5 +1,7 @@
 cimport cprovenance
 
+__docformat__ =  'restructuredtext'
+
 cdef class Prov:
     cdef cprovenance.Provenance *p_prov
     cdef cprovenance.RecordPtr p_record
