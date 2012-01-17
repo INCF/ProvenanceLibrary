@@ -1,0 +1,17 @@
+import cprovenance
+
+prov = cprovenance.Prov('1')
+prov.newRecord()
+prov.newActivity('',"11/30/11 00:13:20.650432 EST", "11/30/11 00:13:20.650550 EST")
+prov.add_child_element("type","input") # says id=(null)
+prov.newUsedRecord("11/30/11 00:13:20.650432 EST")
+prov.newEntity()
+prov.add_child_element("type", "environment")
+prov.newEntity()
+prov.add_child_element("type","runtime")
+prov.newEntity()
+prov.add_child_element("type","output:stat")
+prov.add_child_element("pearson_correlation_coefficient",".234")
+prov.newGeneratedByRecord("11/30/11 00:13:20.650432 EST")
+prov.print_provenance("ctestprov.xml")
+prov.delProvenanceFactory()
