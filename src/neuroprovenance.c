@@ -15,6 +15,18 @@ ProvObjectPtr newProvenanceObject(const char* id)
     return((ProvObjectPtr)p_prov);
 }
 
+ProvObjectPtr newProvenanceObjectFromFile(const char* filename)
+{
+    ProvPtr p_prov = newProvenanceFactoryFromFile(filename);
+    return((ProvObjectPtr)p_prov);
+}
+
+ProvObjectPtr newProvenanceObjectFromBuffer(const char* buffer, int bufferSize)
+{
+    ProvPtr p_prov = newProvenanceFactoryFromMemoryBuffer(buffer, bufferSize);
+    return((ProvObjectPtr)p_prov);
+}
+
 int delProvenanceObject(ProvObjectPtr p_prov){
     return(delProvenanceFactory((ProvPtr)p_prov));
 }
@@ -23,6 +35,22 @@ int delProvenanceObject(ProvObjectPtr p_prov){
 void printProvenance(ProvObjectPtr p_prov, const char* filename)
 {
     print_provenance((ProvPtr)p_prov, filename);
+}
+
+/*
+return provenance as a string buffer
+*/
+void toBuffer(ProvObjectPtr p_prov, char** buffer, int* buffer_size)
+{
+    dumpToMemoryBuffer((ProvPtr)p_prov, buffer, buffer_size);
+}
+
+/*
+free the memory buffer
+*/
+void freeBuffer(char* buffer)
+{
+    freeMemoryBuffer(buffer);
 }
 
 /* Record creation routines */
@@ -230,4 +258,14 @@ int addType(ProvObjectPtr p_prov, REFID id, const char* type)
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     addAttribute(p_record, id, "type", type);
     return(0);
+}
+
+int changeREFID(ProvObjectPtr p_prov, REFID id, const char* new_id)
+{
+    return(changeID(((ProvPtr)p_prov)->p_record, (IDREF)id, new_id));
+}
+
+int addProvenanceRecord(ProvObjectPtr p_curprov, const ProvObjectPtr p_otherprov, const char *prefix)
+{
+    return(addProvAsAccount(((ProvPtr)p_curprov)->p_record, (ProvPtr)p_otherprov, prefix));
 }

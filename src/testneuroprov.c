@@ -54,8 +54,21 @@ main(int argc, char **argv, char** envp)
     id = newProcessOutput(p_prov, p_proc, "pearson_correlation_coefficient", ".234", "ni:output");
     addType(p_prov, id, "ni:statistic");
 
-    printProvenance(p_prov, NULL);
+    /* Test i/o manipulations */
+    char *buffer;
+    int bufsize;
     printProvenance(p_prov, "testneuroprov.xml");
+    toBuffer(p_prov, &buffer, &bufsize);
     delProvenanceObject(p_prov);
+    p_prov = newProvenanceObjectFromBuffer(buffer, bufsize);
+    freeBuffer(buffer);
+    delProvenanceObject(p_prov);
+    p_prov = newProvenanceObjectFromFile("testneuroprov.xml");
+    ProvObjectPtr p_prov2 = newProvenanceObject("NewStuff");
+    addProvenanceRecord(p_prov2, p_prov, NULL);
+    print_provenance(p_prov2, NULL);
+    print_provenance(p_prov2, "testneuroprov2.xml");
+    delProvenanceObject(p_prov);
+    delProvenanceObject(p_prov2);
     return(0);
 }

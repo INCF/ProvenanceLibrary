@@ -15,10 +15,14 @@ typedef char *REFID;
 
 /*Initialization and Cleanup routines*/
 ProvObjectPtr newProvenanceObject(const char*);
+ProvObjectPtr newProvenanceObjectFromFile(const char*);
+ProvObjectPtr newProvenanceObjectFromBuffer(const char* buffer, int bufferSize);
 int delProvenanceObject(ProvObjectPtr);
 
 /*IO routines*/
 void printProvenance(ProvObjectPtr, const char*);
+void toBuffer(ProvObjectPtr p_prov, char** buffer, int* buffer_size);
+void freeBuffer(char* buffer);
 
 /* Record creation routines */
 ProcessPtr newProcess(ProvObjectPtr, const char* startTime, const char* endTime, const char* type);
@@ -37,5 +41,8 @@ REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **env
 
 int addDependency(ProvObjectPtr p_prov, ProcessPtr parent, ProcessPtr child);
 int addType(ProvObjectPtr p_prov, REFID id, const char* type);
+
+int changeREFID(ProvObjectPtr p_prov, REFID id, const char*);
+int addProvenanceRecord(ProvObjectPtr p_curprov, const ProvObjectPtr p_otherprov, const char *prefix);
 
 #endif

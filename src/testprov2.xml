@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns:opm="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:incf="http://incf.org/incf-schema" id="1">
+  <records>
+    <account id="ac_0">
+      <records>
+    <activity id="ac_0_a_0">
+      <startTime>11/30/11 00:13:20.650432 EST</startTime>
+      <endTime>11/30/11 00:13:20.650550 EST</endTime>
+      <type>program</type>
+      <name>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov</name>
+      <version>1.0.0</version>
+      <cmdline>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov -c 2 -m</cmdline>
+    </activity>
+    <entity id="ac_0_e_0">
+      <type>input</type>
+      <arg1>-c</arg1>
+    </entity>
+    <dependencies>
+      <used id="ac_0_u_0">
+        <activity ref="ac_0_a_0"/>
+        <entity ref="ac_0_e_0"/>
+      </used>
+      <used id="ac_0_u_1">
+        <activity ref="ac_0_a_0"/>
+        <entity ref="ac_0_e_1"/>
+      </used>
+      <used id="ac_0_u_2">
+        <activity ref="ac_0_a_0"/>
+        <entity ref="ac_0_e_2"/>
+      </used>
+      <wasGeneratedBy id="ac_0_wgb_0">
+        <entity ref="ac_0_e_5"/>
+        <activity ref="ac_0_a_0"/>
+      </wasGeneratedBy>
+      <wasGeneratedBy id="ac_0_wgb_1">
+        <entity ref="ac_0_e_6"/>
+        <activity ref="ac_0_a_0"/>
+      </wasGeneratedBy>
+    </dependencies>
+    <entity id="ac_0_e_1">
+      <type>input</type>
+      <arg2>2</arg2>
+    </entity>
+    <entity id="ac_0_e_2">
+      <type>input</type>
+      <arg3>-m</arg3>
+    </entity>
+    <entity id="ac_0_e_3">
+      <type>environment</type>
+      <PATH>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
+      <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
+      <LOGNAME>satra</LOGNAME>
+      <COMMAND_MODE>unix2003</COMMAND_MODE>
+      <DISPLAY>/tmp/launch-9Dx8oH/org.macosforge.xquartz:0</DISPLAY>
+      <Apple_PubSub_Socket_Render>/tmp/launch-PeLnXj/Render</Apple_PubSub_Socket_Render>
+      <USER>satra</USER>
+      <SHELL>/bin/bash</SHELL>
+      <SSH_AUTH_SOCK>/tmp/launch-hjVTaO/Listeners</SSH_AUTH_SOCK>
+      <HOME>/Users/satra</HOME>
+    </entity>
+    <entity id="ac_0_e_4">
+      <type>runtime</type>
+    </entity>
+    <entity id="ac_0_e_5">
+      <type>output:file</type>
+      <warped_file>/full/path/to/file</warped_file>
+    </entity>
+    <entity id="ac_0_e_6">
+      <type>output:stat</type>
+      <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
+    </entity>
+  </records>
+    </account>
+  </records>
+</container>
