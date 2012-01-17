@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<container xmlns="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:incf="http://incf.org/incf-schema" id="1">
+<container xmlns:opm="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:incf="http://incf.org/incf-schema" id="1">
   <records>
-    <activity id="a0">
+    <activity id="a_0">
       <startTime>11/30/11 00:13:20.650432 EST</startTime>
       <endTime>11/30/11 00:13:20.650550 EST</endTime>
       <type>program</type>
@@ -9,61 +9,61 @@
       <version>1.0.0</version>
       <cmdline>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testprov -c 2 -m</cmdline>
     </activity>
-    <entity id="e0">
+    <entity id="e_0">
       <type>input</type>
       <arg1>-c</arg1>
     </entity>
     <dependencies>
-      <used id="u0">
-        <activity ref="a0"/>
-        <entity ref="e0"/>
+      <used id="u_0">
+        <activity ref="a_0"/>
+        <entity ref="e_0"/>
       </used>
-      <used id="u1">
-        <activity ref="a0"/>
-        <entity ref="e2"/>
+      <used id="u_1">
+        <activity ref="a_0"/>
+        <entity ref="e_1"/>
       </used>
-      <used id="u2">
-        <activity ref="a0"/>
-        <entity ref="e4"/>
+      <used id="u_2">
+        <activity ref="a_0"/>
+        <entity ref="e_2"/>
       </used>
-      <wasGeneratedBy id="wgb0">
-        <entity ref="e8"/>
-        <activity ref="a0"/>
+      <wasGeneratedBy id="wgb_0">
+        <entity ref="e_5"/>
+        <activity ref="a_0"/>
       </wasGeneratedBy>
-      <wasGeneratedBy id="wgb1">
-        <entity ref="e10"/>
-        <activity ref="a0"/>
+      <wasGeneratedBy id="wgb_1">
+        <entity ref="e_6"/>
+        <activity ref="a_0"/>
       </wasGeneratedBy>
     </dependencies>
-    <entity id="e2">
+    <entity id="e_1">
       <type>input</type>
       <arg2>2</arg2>
     </entity>
-    <entity id="e4">
+    <entity id="e_2">
       <type>input</type>
       <arg3>-m</arg3>
     </entity>
-    <entity id="e6">
+    <entity id="e_3">
       <type>environment</type>
       <PATH>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
       <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
       <LOGNAME>satra</LOGNAME>
       <COMMAND_MODE>unix2003</COMMAND_MODE>
-      <DISPLAY>/tmp/launch-36iSDO/org.macosforge.xquartz:0</DISPLAY>
-      <Apple_PubSub_Socket_Render>/tmp/launch-P4iguB/Render</Apple_PubSub_Socket_Render>
+      <DISPLAY>/tmp/launch-9Dx8oH/org.macosforge.xquartz:0</DISPLAY>
+      <Apple_PubSub_Socket_Render>/tmp/launch-PeLnXj/Render</Apple_PubSub_Socket_Render>
       <USER>satra</USER>
       <SHELL>/bin/bash</SHELL>
-      <SSH_AUTH_SOCK>/tmp/launch-Sgj06F/Listeners</SSH_AUTH_SOCK>
+      <SSH_AUTH_SOCK>/tmp/launch-hjVTaO/Listeners</SSH_AUTH_SOCK>
       <HOME>/Users/satra</HOME>
     </entity>
-    <entity id="e7">
+    <entity id="e_4">
       <type>runtime</type>
     </entity>
-    <entity id="e8">
+    <entity id="e_5">
       <type>output:file</type>
       <warped_file>/full/path/to/file</warped_file>
     </entity>
-    <entity id="e10">
+    <entity id="e_6">
       <type>output:stat</type>
       <pearson_correlation_coefficient>.234</pearson_correlation_coefficient>
     </entity>

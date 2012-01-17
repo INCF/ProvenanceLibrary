@@ -33,7 +33,7 @@ ProcessPtr newProcess(ProvObjectPtr p_prov, const char* startTime, const char* e
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF act_id = newActivity(p_record, NULL, startTime, endTime);
     if (type != NULL)
-        add_child_element(p_record, act_id, "type", type);
+        addAttribute(p_record, act_id, "type", type);
     return((ProcessPtr)act_id);
 }
 
@@ -43,11 +43,11 @@ REFID newProcessInput(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* name,
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = newEntity(p_record);
     if (type == NULL)
-        add_child_element(p_record, id, "type", "ni:input");
+        addAttribute(p_record, id, "type", "ni:input");
     else
-        add_child_element(p_record, id, "type", type);
-    add_child_element(p_record, id, "name", name);
-    add_child_element(p_record, id, "value", value);
+        addAttribute(p_record, id, "type", type);
+    addAttribute(p_record, id, "name", name);
+    addAttribute(p_record, id, "value", value);
     newUsedRecord(p_record, (IDREF)p_proc, id, NULL);
     return((REFID)id);
 }
@@ -58,11 +58,11 @@ REFID newProcessOutput(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* name
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = newEntity(p_record);
     if (type == NULL)
-        add_child_element(p_record, id, "type", "ni:output");
+        addAttribute(p_record, id, "type", "ni:output");
     else
-        add_child_element(p_record, id, "type", type);
-    add_child_element(p_record, id, "name", name);
-    add_child_element(p_record, id, "value", value);
+        addAttribute(p_record, id, "type", type);
+    addAttribute(p_record, id, "name", name);
+    addAttribute(p_record, id, "value", value);
     newGeneratedByRecord(p_record, id, (IDREF)p_proc, NULL);
     return((REFID)id);
 }
@@ -123,13 +123,13 @@ REFID newFile(ProvObjectPtr p_prov, const char* filename, const char* type)
     IDREF id = newEntity(p_record);
     unsigned char* p_hash;
     if (type == NULL)
-        add_child_element(p_record, id, "type", "ni:file");
+        addAttribute(p_record, id, "type", "ni:file");
     else
-        add_child_element(p_record, id, "type", type);
-    add_child_element(p_record, id, "path", filename);
+        addAttribute(p_record, id, "type", type);
+    addAttribute(p_record, id, "path", filename);
     p_hash = get_md5_hash(filename);
     if (p_hash != NULL){
-        add_child_element(p_record, id, "md5sum", p_hash);
+        addAttribute(p_record, id, "md5sum", p_hash);
         free(p_hash);
     }
     return((REFID)id);
@@ -142,11 +142,11 @@ REFID newFileCollection(ProvObjectPtr p_prov, const char** filenames, int n_file
     IDREF id = newEntity(p_record);
     int i;
     if (type == NULL)
-        add_child_element(p_record, id, "type", "ni:filelist");
+        addAttribute(p_record, id, "type", "ni:filelist");
     else
-        add_child_element(p_record, id, "type", type);
+        addAttribute(p_record, id, "type", type);
     for(i=0; i<n_files; i++)
-        add_child_element(p_record, id, "path", filenames[i]);
+        addAttribute(p_record, id, "path", filenames[i]);
     return((REFID)id);
 }
 
@@ -155,8 +155,8 @@ REFID addEnvironVariable(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* na
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = newEntity(p_record);
-    add_child_element(p_record, id, "type", "ni:environ");
-    add_child_element(p_record, id, name, getenv(name));
+    addAttribute(p_record, id, "type", "ni:environ");
+    addAttribute(p_record, id, name, getenv(name));
     return((REFID)id);
 }
 
@@ -167,7 +167,7 @@ REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **env
     IDREF id = newEntity(p_record);
     char buffer[255];
     int i;
-    add_child_element(p_record, id, "type", "ni:environ");
+    addAttribute(p_record, id, "type", "ni:environ");
     char** env;
     for (env = envp; *env != 0; env++)
     {
@@ -178,7 +178,7 @@ REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **env
        while (thisEnv[pos++] != '=');
        name = strndup(thisEnv, pos-1);
        if (name[0] != '_')
-           add_child_element(p_record, id, name, &thisEnv[pos]);
+           addAttribute(p_record, id, name, &thisEnv[pos]);
        free(name);
     }
     return((REFID)id);
@@ -188,7 +188,7 @@ REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **env
 int addKeyValuePair(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* key, const char* value)
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
-    add_child_element(p_record, (IDREF)p_proc, key, value);
+    addAttribute(p_record, (IDREF)p_proc, key, value);
     return(0);
 }
 
@@ -213,7 +213,7 @@ int addCommandLine(ProvObjectPtr p_prov, ProcessPtr p_proc, int argc, char** arg
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = (IDREF)p_proc;
     char *cmdline = get_cmdline(argc, argv);
-    add_child_element(p_record, id, "cmdline", cmdline);
+    addAttribute(p_record, id, "cmdline", cmdline);
     free(cmdline);
     return(0);
 }
@@ -228,6 +228,6 @@ int addDependency(ProvObjectPtr p_prov, ProcessPtr parent, ProcessPtr child)
 int addType(ProvObjectPtr p_prov, REFID id, const char* type)
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
-    add_child_element(p_record, id, "type", type);
+    addAttribute(p_record, id, "type", type);
     return(0);
 }

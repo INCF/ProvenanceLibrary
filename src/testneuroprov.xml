@@ -43,11 +43,11 @@
       <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
       <LOGNAME>satra</LOGNAME>
       <COMMAND_MODE>unix2003</COMMAND_MODE>
-      <DISPLAY>/tmp/launch-36iSDO/org.macosforge.xquartz:0</DISPLAY>
-      <Apple_PubSub_Socket_Render>/tmp/launch-P4iguB/Render</Apple_PubSub_Socket_Render>
+      <DISPLAY>/tmp/launch-9Dx8oH/org.macosforge.xquartz:0</DISPLAY>
+      <Apple_PubSub_Socket_Render>/tmp/launch-PeLnXj/Render</Apple_PubSub_Socket_Render>
       <USER>satra</USER>
       <SHELL>/bin/bash</SHELL>
-      <SSH_AUTH_SOCK>/tmp/launch-Sgj06F/Listeners</SSH_AUTH_SOCK>
+      <SSH_AUTH_SOCK>/tmp/launch-hjVTaO/Listeners</SSH_AUTH_SOCK>
       <HOME>/Users/satra</HOME>
     </entity>
     <entity id="e5">
