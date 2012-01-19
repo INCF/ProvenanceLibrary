@@ -175,6 +175,7 @@ ProvPtr newProvenanceFactory(const char* id)
     xmlNewNs(root_node, "http://www.w3.org/2001/XMLSchema", "xsd");
     xmlNewNs(root_node, "http://openprovenance.org/prov-xml#", "prov");
     xmlNewNs(root_node, "http://incf.org/incf-schema", "incf");
+    xmlNewNs(root_node, "http://this.namespace.needs.to/be.decided", "ni");
     {
 	xmlNsPtr provns = xmlNewNs(root_node, "http://openprovenance.org/prov-xml#", NULL);
 	root_node->ns = provns;
@@ -466,7 +467,7 @@ IDREF newHasAnnotationRecord(RecordPtr p_record, IDREF thing, IDREF note)
 /*
 Add key value elements with given id
 */
-int addAttribute(RecordPtr p_record, IDREF id, const char* key, const char* value)
+int addAttribute(RecordPtr p_record, IDREF id, const char * prefix, const char* localName, const char* value)
 {
     xmlChar xpathExpr[128];
     sprintf(xpathExpr, "//*[@id='%s']", id);
@@ -487,9 +488,19 @@ int addAttribute(RecordPtr p_record, IDREF id, const char* key, const char* valu
        return(1);
     }
     xmlNodePtr p_node = p_xpquery->xpathObj->nodesetval->nodeTab[0];
-    assert(key);
+    assert(localName);
     assert(value);
-    xmlNewChild(p_node, NULL, BAD_CAST key, BAD_CAST value);
+    xmlNsPtr ns = NULL;
+    if (prefix != NULL) {
+       xmlNodePtr root_node = xmlDocGetRootElement(p_node->doc);
+       ns = xmlSearchNs(p_node->doc, root_node, prefix);
+       if (ns == NULL) {
+	  fprintf(stderr, "Prefix '%s' not previously defined with addNamespace().\n", prefix);
+	  free_xpquery(p_xpquery);
+	  return(1);
+       }
+    }
+    xmlNewChild(p_node, ns, BAD_CAST localName, BAD_CAST value);
 
     /* Cleanup */
     free_xpquery(p_xpquery);

@@ -1,67 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<container xmlns:opm="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:incf="http://incf.org/incf-schema" xmlns:ni="https://github.com/INCF/ProvenanceLibrary/wiki/terms" id="BET">
+<container xmlns:opm="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:incf="http://incf.org/incf-schema" xmlns:ni="http://this.namespace.needs.to/be.decided" xmlns="http://openprovenance.org/prov-xml#" id="BET">
   <records>
     <activity id="a_0">
       <startTime>11/30/11 00:13:20.650432 EST</startTime>
       <endTime>11/30/11 00:13:20.650550 EST</endTime>
-      <type>ni:brain_extraction</type>
-      <cmdline>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testneuroprov -c 2</cmdline>
-      <program>/Users/satra/Dropbox/WORK/PROJECTS/INCF/ProvenanceLibrary/src/testneuroprov</program>
+      <prov:type>ni:brain_extraction</prov:type>
+      <ni:cmdline>./testneuroprov</ni:cmdline>
+      <program>./testneuroprov</program>
       <version>1.0.0</version>
     </activity>
     <entity id="e_0">
-      <type>ni:input</type>
-      <name>arg1</name>
-      <value>-c</value>
+      <prov:type>ni:environ</prov:type>
+      <HOSTNAME>varese.dhe.duke.edu</HOSTNAME>
+      <SELINUX_ROLE_REQUESTED></SELINUX_ROLE_REQUESTED>
+      <TERM>xterm</TERM>
+      <SHELL>/bin/bash</SHELL>
+      <HISTSIZE>1000</HISTSIZE>
+      <GLOBUS_PATH>/opt/globus-client-5.0.0.rc3-r1</GLOBUS_PATH>
+      <GLOBUS_LOCATION>/opt/globus-client-5.0.0.rc3-r1</GLOBUS_LOCATION>
+      <SSH_CLIENT>152.16.195.158 2993 22</SSH_CLIENT>
+      <PERL5LIB>/opt/globus-client-5.0.0.rc3-r1/lib/perl</PERL5LIB>
+      <FSLMULTIFILEQUIT>TRUE</FSLMULTIFILEQUIT>
+      <SELINUX_USE_CURRENT_RANGE></SELINUX_USE_CURRENT_RANGE>
+      <QTDIR>/usr/lib64/qt-3.3</QTDIR>
+      <QTINC>/usr/lib64/qt-3.3/include</QTINC>
+      <SSH_TTY>/dev/pts/25</SSH_TTY>
+      <USER>gadde</USER>
+      <LD_LIBRARY_PATH>.</LD_LIBRARY_PATH>
+      <LS_COLORS>no=00:fi=00:di=01;36:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:</LS_COLORS>
+      <LIBPATH>/opt/globus-client-5.0.0.rc3-r1/lib:/usr/lib:/lib</LIBPATH>
+      <MAIL>/var/spool/mail/gadde</MAIL>
+      <PATH>/usr/lib64/qt-3.3/bin:/opt/globus-client-5.0.0.rc3-r1/bin:/opt/globus-client-5.0.0.rc3-r1/sbin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/packages/bxh_xcede_tools/bin:/usr/local/packages/dcmtk/bin:/usr/local/packages/fsl/bin:/home/gadde/bin</PATH>
+      <FSLMACHTYPE>linux_64-gcc4.4</FSLMACHTYPE>
+      <PWD>/home/gadde/checkedout/ProvenanceLibrary/src</PWD>
+      <XMODIFIERS>@im=none</XMODIFIERS>
+      <KDE_IS_PRELINKED>1</KDE_IS_PRELINKED>
+      <LANG>en_US.UTF-8</LANG>
+      <MODULEPATH>/usr/share/Modules/modulefiles:/etc/modulefiles</MODULEPATH>
+      <FSLTCLSH>/usr/local/packages/fsl/bin/fsltclsh</FSLTCLSH>
+      <LOADEDMODULES></LOADEDMODULES>
+      <KDEDIRS>/usr</KDEDIRS>
+      <FSLMACHINELIST></FSLMACHINELIST>
+      <MYPROXY_SERVER>certs.nbirn.org</MYPROXY_SERVER>
+      <SELINUX_LEVEL_REQUESTED></SELINUX_LEVEL_REQUESTED>
+      <FSLREMOTECALL></FSLREMOTECALL>
+      <FSLCONFDIR>/usr/local/packages/fsl/config</FSLCONFDIR>
+      <FSLWISH>/usr/local/packages/fsl/bin/fslwish</FSLWISH>
+      <SSH_ASKPASS>/usr/libexec/openssh/gnome-ssh-askpass</SSH_ASKPASS>
+      <HISTCONTROL>ignoredups</HISTCONTROL>
+      <SHLVL>1</SHLVL>
+      <HOME>/home/gadde</HOME>
+      <LANGUAGE></LANGUAGE>
+      <DYLD_LIBRARY_PATH>/opt/globus-client-5.0.0.rc3-r1/lib</DYLD_LIBRARY_PATH>
+      <LOGNAME>gadde</LOGNAME>
+      <QTLIB>/usr/lib64/qt-3.3/lib</QTLIB>
+      <FSLDIR>/usr/local/packages/fsl</FSLDIR>
+      <CVS_RSH>ssh</CVS_RSH>
+      <SSH_CONNECTION>152.16.195.158 2993 10.152.25.5 22</SSH_CONNECTION>
+      <MODULESHOME>/usr/share/Modules</MODULESHOME>
+      <LESSOPEN>|/usr/bin/lesspipe.sh %s</LESSOPEN>
+      <SHLIB_PATH>/opt/globus-client-5.0.0.rc3-r1/lib</SHLIB_PATH>
+      <DISPLAY>localhost:10.0</DISPLAY>
+      <FSLLOCKDIR></FSLLOCKDIR>
+      <FSLOUTPUTTYPE>NIFTI_GZ</FSLOUTPUTTYPE>
+      <G_BROKEN_FILENAMES>1</G_BROKEN_FILENAMES>
+      <module>() {  eval `/usr/bin/modulecmd bash $*`
+}</module>
+      <OLDPWD>/home/gadde/checkedout/ProvenanceLibrary</OLDPWD>
     </entity>
+    <entity id="e_0"/>
     <dependencies>
-      <used id="u_0">
-        <activity ref="a_0"/>
-        <entity ref="e_0"/>
-      </used>
-      <used id="u_1">
-        <activity ref="a_0"/>
-        <entity ref="e_1"/>
-      </used>
       <wasGeneratedBy id="wgb_0">
-        <entity ref="e_3"/>
-        <activity ref="a_0"/>
-      </wasGeneratedBy>
-      <wasGeneratedBy id="wgb_1">
-        <entity ref="e_4"/>
+        <entity ref="e_0"/>
         <activity ref="a_0"/>
       </wasGeneratedBy>
     </dependencies>
-    <entity id="e_1">
-      <type>ni:input</type>
-      <name>arg2</name>
-      <value>2</value>
-    </entity>
-    <entity id="e_2">
-      <type>ni:environ</type>
-      <PATH>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/local/bin:/usr/local/git/bin</PATH>
-      <TMPDIR>/var/folders/1l/ly3rt98n1sd4cdw03l7ncf1r0000gn/T/</TMPDIR>
-      <LOGNAME>satra</LOGNAME>
-      <COMMAND_MODE>unix2003</COMMAND_MODE>
-      <DISPLAY>/tmp/launch-9Dx8oH/org.macosforge.xquartz:0</DISPLAY>
-      <Apple_PubSub_Socket_Render>/tmp/launch-PeLnXj/Render</Apple_PubSub_Socket_Render>
-      <USER>satra</USER>
-      <SHELL>/bin/bash</SHELL>
-      <SSH_AUTH_SOCK>/tmp/launch-hjVTaO/Listeners</SSH_AUTH_SOCK>
-      <HOME>/Users/satra</HOME>
-    </entity>
-    <entity id="e_3">
-      <type>ni:output</type>
-      <path>./testneuroprov.c</path>
-      <md5sum>1913486fff3eefbdb0aea05778f57ec6</md5sum>
-      <name>warped_file</name>
-      <type>ni:normalized</type>
-    </entity>
-    <entity id="e_4">
-      <type>ni:output</type>
-      <name>pearson_correlation_coefficient</name>
-      <value>.234</value>
-      <type>ni:statistic</type>
-    </entity>
+    <entity id="e_0"/>
+    <dependencies>
+      <wasGeneratedBy id="wgb_0">
+        <entity ref="e_0"/>
+        <activity ref="a_0"/>
+      </wasGeneratedBy>
+    </dependencies>
   </records>
 </container>

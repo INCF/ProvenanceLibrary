@@ -50,7 +50,7 @@ IDREF newSpecializationOfRecord(RecordPtr p_record, IDREF entity1, IDREF entity2
 IDREF newHasAnnotationRecord(RecordPtr p_rec, IDREF thing, IDREF note);
 
 /* Record manipulation routines */
-int addAttribute(RecordPtr p_record, IDREF id, const char* key, const char* value);
+int addAttribute(RecordPtr p_record, IDREF id, const char * prefix, const char* localName, const char* value);
 int changeID(RecordPtr, IDREF, const char*);
 int addProvAsAccount(RecordPtr p_record, const ProvPtr p_prov, const char *prefix);
 
