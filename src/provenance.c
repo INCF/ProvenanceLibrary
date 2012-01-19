@@ -53,6 +53,12 @@ static XPathQueryPtr query_xpath(const xmlDocPtr doc, const xmlChar* xpathExpr)
         fprintf(stderr,"Error: unable to create new XPath context\n");
         return(NULL);
     }
+    xpathCtx->namespaces = xmlGetNsList(doc, xmlDocGetRootElement(doc));
+    xpathCtx->nsNr = 0;
+    if (xpathCtx->namespaces != NULL) {
+	while (xpathCtx->namespaces[xpathCtx->nsNr] != NULL)
+	    xpathCtx->nsNr++;
+    }
 
     /* Evaluate xpath expression */
     xpathObj = xmlXPathEvalExpression(xpathExpr, xpathCtx);
@@ -129,7 +135,7 @@ static RecordPtr newRecord(ProvPtr p_prov)
 {
     assert(p_prov);
     PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
-    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/container");
+    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/prov:container");
 
     int size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
     if (size != 1){
@@ -169,6 +175,10 @@ ProvPtr newProvenanceFactory(const char* id)
     xmlNewNs(root_node, "http://www.w3.org/2001/XMLSchema", "xsd");
     xmlNewNs(root_node, "http://openprovenance.org/prov-xml#", "prov");
     xmlNewNs(root_node, "http://incf.org/incf-schema", "incf");
+    {
+	xmlNsPtr provns = xmlNewNs(root_node, "http://openprovenance.org/prov-xml#", NULL);
+	root_node->ns = provns;
+    }
 
     //fprintf(stdout, "Creating provenance object [END]\n");
     p_prov->p_record = (void *)newRecord(p_prov);
@@ -197,7 +207,7 @@ ProvPtr newProvenanceFactoryFromFile(const char* filename)
     }
     xmlNodePtr root_node = xmlDocGetRootElement(p_priv->doc);
     p_prov->id = strdup(xmlGetProp(root_node, BAD_CAST "id"));
-    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/container/records");
+    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/prov:container/prov:records");
     int size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
     if (size != 1){
         fprintf(stderr, "No records element found\n");
@@ -238,7 +248,7 @@ ProvPtr newProvenanceFactoryFromMemoryBuffer(const char* buffer, int bufferSize)
     xmlChar* p_id = xmlGetProp(root_node, BAD_CAST "id");
     assert(p_id);
     p_prov->id = strdup(p_id);
-    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/container/records");
+    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/prov:container/prov:records");
     int size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
     if (size != 1){
         fprintf(stderr, "%d records element found in container id[%s] \n", size, p_prov->id);
@@ -552,7 +562,7 @@ int addProvAsAccount(RecordPtr p_record, const ProvPtr p_prov, const char *prefi
 
     //copy contents of provenance record
     PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
-    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/container/records");
+    XPathQueryPtr p_xpquery = query_xpath(p_priv->doc, "/prov:container/prov:records");
     int size = (p_xpquery->xpathObj->nodesetval) ? p_xpquery->xpathObj->nodesetval->nodeNr : 0;
     //fprintf(stdout, "xpath[%s]:numnodes[%d]\n", xpathExpr, size);
     if (size==0){
