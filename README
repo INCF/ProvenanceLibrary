@@ -42,7 +42,9 @@ http://dvcs.w3.org/hg/prov/file/tip/ontology/ProvenanceFormalModel.html
 Upstream schema
 ~~~~~~~~~~~~~~~
 
-https://github.com/lucmoreau/ProvToolbox/blob/master/xml/src/main/resources/prov-20111110.xsd
+if the date is much more recent than that indicated in the filename, please check luc moreau's repository
+
+http://github.com/lucmoreau/ProvToolbox/blob/master/xml/src/main/resources/prov-20120110.xsd
 
 Install
 -------
