@@ -12,6 +12,8 @@ ProvObjectPtr newProvenanceObject(const char* id)
     ProvPtr p_prov = newProvenanceFactory(id);
     // add new namespace
     addNamespace(p_prov, "https://github.com/INCF/ProvenanceLibrary/wiki/terms", "ni");
+    //xmlNewNs(root_node, "http://incf.org/incf-schema", "incf");
+    //xmlNewNs(root_node, "http://this.namespace.needs.to/be.decided", "ni");
     return((ProvObjectPtr)p_prov);
 }
 
@@ -61,7 +63,7 @@ ProcessPtr newProcess(ProvObjectPtr p_prov, const char* startTime, const char* e
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF act_id = newActivity(p_record, NULL, startTime, endTime);
     if (type != NULL)
-        addAttribute(p_record, act_id, "prov", "type", type);
+	addAttribute(p_record, act_id, "prov", NULL, "label", type);
     return((ProcessPtr)act_id);
 }
 
@@ -71,11 +73,11 @@ REFID newProcessInput(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* name,
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = newEntity(p_record);
     if (type == NULL)
-        addAttribute(p_record, id, "prov", "type", "ni:input");
+	addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:input");
     else
-        addAttribute(p_record, id, "prov", "type", type);
-    addAttribute(p_record, id, "ni", "name", name);
-    addAttribute(p_record, id, "ni", "value", value);
+	addAttribute(p_record, id, "prov", "xsd:string", "type", type);
+    addAttribute(p_record, id, "ni", "xsd:string", "name", name);
+    addAttribute(p_record, id, "ni", "xsd:string", "value", value);
     newUsedRecord(p_record, (IDREF)p_proc, id, NULL);
     return((REFID)id);
 }
@@ -86,11 +88,11 @@ REFID newProcessOutput(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* name
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = newEntity(p_record);
     if (type == NULL)
-        addAttribute(p_record, id, "prov", "type", "ni:output");
+	addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:output");
     else
-        addAttribute(p_record, id, "prov", "type", type);
-    addAttribute(p_record, id, "ni", "name", name);
-    addAttribute(p_record, id, "ni", "value", value);
+	addAttribute(p_record, id, "prov", "xsd:string", "type", type);
+    addAttribute(p_record, id, "ni", "xsd:string", "name", name);
+    addAttribute(p_record, id, "ni", "xsd:string", "value", value);
     newGeneratedByRecord(p_record, id, (IDREF)p_proc, NULL);
     return((REFID)id);
 }
@@ -151,13 +153,13 @@ REFID newFile(ProvObjectPtr p_prov, const char* filename, const char* type)
     IDREF id = newEntity(p_record);
     unsigned char* p_hash;
     if (type == NULL)
-        addAttribute(p_record, id, "prov", "type", "ni:file");
+	addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:file");
     else
-        addAttribute(p_record, id, "prov", "type", type);
-    addAttribute(p_record, id, "ni", "path", filename);
+	addAttribute(p_record, id, "prov", "xsd:QName", "type", type);
+    //addAttribute(p_record, id, "ni", "xsd:string", "path", filename);
     p_hash = get_md5_hash(filename);
     if (p_hash != NULL){
-        addAttribute(p_record, id, "ni", "md5sum", p_hash);
+	addAttribute(p_record, id, "ni", NULL, "md5sum", p_hash);
         free(p_hash);
     }
     return((REFID)id);
@@ -170,11 +172,11 @@ REFID newFileCollection(ProvObjectPtr p_prov, const char** filenames, int n_file
     IDREF id = newEntity(p_record);
     int i;
     if (type == NULL)
-        addAttribute(p_record, id, "prov", "type", "ni:filelist");
+	addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:filelist");
     else
-        addAttribute(p_record, id, "prov", "type", type);
+	addAttribute(p_record, id, "prov", "xsd:string", "type", type);
     for(i=0; i<n_files; i++)
-        addAttribute(p_record, id, "ni", "path", filenames[i]);
+	addAttribute(p_record, id, "ni", NULL, "path", filenames[i]);
     return((REFID)id);
 }
 
@@ -183,8 +185,8 @@ REFID addEnvironVariable(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* na
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = newEntity(p_record);
-    addAttribute(p_record, id, "prov", "type", "ni:environ");
-    addAttribute(p_record, id, NULL, name, getenv(name));
+    addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:environ");
+    addAttribute(p_record, id, "ni", NULL, name, getenv(name));
     return((REFID)id);
 }
 
@@ -195,7 +197,8 @@ REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **env
     IDREF id = newEntity(p_record);
     char buffer[255];
     int i;
-    addAttribute(p_record, id, "prov", "type", "ni:environ");
+    addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:environ");
+    //addAttribute(p_record, id, "ni", "foo", "foo");
     char** env;
     for (env = envp; *env != 0; env++)
     {
@@ -206,7 +209,11 @@ REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **env
        while (thisEnv[pos++] != '=');
        name = strndup(thisEnv, pos-1);
        if (name[0] != '_')
-           addAttribute(p_record, id, NULL, name, &thisEnv[pos]);
+       {
+	   sprintf(buffer, "%s\0", &thisEnv[pos]);
+	   //fprintf(stderr, "<%s>=%s\n", name, &buffer);
+	   addAttribute(p_record, id, "ni", NULL, name, &buffer);
+       }
        free(name);
     }
     return((REFID)id);
@@ -216,7 +223,7 @@ REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **env
 int addKeyValuePair(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* key, const char* value)
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
-    addAttribute(p_record, (IDREF)p_proc, NULL, key, value);
+    addAttribute(p_record, (IDREF)p_proc, "ni", NULL, key, value);
     return(0);
 }
 
@@ -241,7 +248,7 @@ int addCommandLine(ProvObjectPtr p_prov, ProcessPtr p_proc, int argc, char** arg
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = (IDREF)p_proc;
     char *cmdline = get_cmdline(argc, argv);
-    addAttribute(p_record, id, "ni", "cmdline", cmdline);
+    addAttribute(p_record, id, "ni", NULL, "cmdline", cmdline);
     free(cmdline);
     return(0);
 }
@@ -253,16 +260,25 @@ int addDependency(ProvObjectPtr p_prov, ProcessPtr parent, ProcessPtr child)
 }
 
 /* Add additional type information to a record object (process/input/output) */
-int addType(ProvObjectPtr p_prov, REFID id, const char* type)
+int addType(ProvObjectPtr p_prov, REFID id, const char* type, const char* xsdType)
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
-    addAttribute(p_record, id, "prov", "type", type);
+    if (xsdType == NULL)
+	addAttribute(p_record, id, "prov", "xsd:string", "type", type);
+    else
+	addAttribute(p_record, id, "prov", xsdType, "type", type);
     return(0);
 }
 
 int changeREFID(ProvObjectPtr p_prov, REFID id, const char* new_id)
 {
     return(changeID(((ProvPtr)p_prov)->p_record, (IDREF)id, new_id));
+}
+
+int freeREFID(REFID id)
+{
+    freeID((IDREF)id);
+    return(0);
 }
 
 int addProvenanceRecord(ProvObjectPtr p_curprov, const ProvObjectPtr p_otherprov, const char *prefix)
