@@ -40,9 +40,10 @@ REFID addEnvironVariable(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* na
 REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **envp);
 
 int addDependency(ProvObjectPtr p_prov, ProcessPtr parent, ProcessPtr child);
-int addType(ProvObjectPtr p_prov, REFID id, const char* type);
+int addType(ProvObjectPtr p_prov, REFID id, const char* type, const char* xsdType);
 
 int changeREFID(ProvObjectPtr p_prov, REFID id, const char*);
+int freeREFID(REFID id);
 int addProvenanceRecord(ProvObjectPtr p_curprov, const ProvObjectPtr p_otherprov, const char *prefix);
 
 #endif

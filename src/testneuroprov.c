@@ -30,7 +30,7 @@ main(int argc, char **argv, char** envp)
     p_proc = newProcess(p_prov,
                         "11/30/11 00:13:20.650432 EST",
                         "11/30/11 00:13:20.650550 EST",
-                        "ni:brain_extraction");
+			"brain_extraction");
     addCommandLine(p_prov, p_proc, argc, argv);
 
     addKeyValuePair(p_prov, p_proc, "program", argv[0]);
@@ -42,29 +42,36 @@ main(int argc, char **argv, char** envp)
         newProcessInput(p_prov, p_proc, arg, argv[i], NULL);
     }
 
-    addAllEnvironVariables(p_prov, p_proc, envp);
+    //addAllEnvironVariables(p_prov, p_proc, envp);
 
     // [TODO]: add runtime info such as walltime, cputime, host,
 
-    id = newFile(p_prov, "./testneuroprov.c", "ni:output");
+    id = newFile(p_prov, "./testneuroprov.c", "ni:output1");
     addKeyValuePair(p_prov, id, "name", "warped_file");
-    addType(p_prov, id, "ni:normalized");
+    addType(p_prov, id, "ni:normalized", "xsd:QName");
     addOutput(p_prov, p_proc, id);
+    freeREFID(id);
 
     id = newProcessOutput(p_prov, p_proc, "pearson_correlation_coefficient", ".234", "ni:output");
-    addType(p_prov, id, "ni:statistic");
+    addType(p_prov, id, "ni:statistic", "xsd:QName");
+    freeREFID(id);
 
     /* Test i/o manipulations */
     char *buffer;
     int bufsize;
+    // Write to file
     printProvenance(p_prov, "testneuroprov.xml");
+    // Write to string
     toBuffer(p_prov, &buffer, &bufsize);
     delProvenanceObject(p_prov);
+    // Create provenance object from string
     p_prov = newProvenanceObjectFromBuffer(buffer, bufsize);
     freeBuffer(buffer);
     delProvenanceObject(p_prov);
+    // Create provenance object from file
     p_prov = newProvenanceObjectFromFile("testneuroprov.xml");
     ProvObjectPtr p_prov2 = newProvenanceObject("NewStuff");
+    // Add older provenance to new provenace object
     addProvenanceRecord(p_prov2, p_prov, NULL);
     print_provenance(p_prov2, NULL);
     print_provenance(p_prov2, "testneuroprov2.xml");
