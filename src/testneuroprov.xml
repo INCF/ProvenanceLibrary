@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<prov:container xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ni="https://github.com/INCF/ProvenanceLibrary/wiki/terms" id="BET">
+<prov:container xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ni="https://github.com/INCF/ProvenanceLibrary/wiki/terms" prov:id="BET">
   <prov:records>
     <prov:activity prov:id="a_0">
       <prov:startTime>11/30/11 00:13:20.650432 EST</prov:startTime>
@@ -39,7 +39,7 @@
     </prov:entity>
     <prov:entity prov:id="e_2">
       <prov:type xsi:type="xsd:QName">ni:output1</prov:type>
-      <ni:md5sum>0f3b02e88b66248b5261c6babd559494</ni:md5sum>
+      <ni:md5sum>384add5e1a1cd5ac6f821b2e41aac098</ni:md5sum>
       <ni:name>warped_file</ni:name>
       <prov:type xsi:type="xsd:QName">ni:normalized</prov:type>
     </prov:entity>
@@ -49,10 +49,5 @@
       <ni:value xsi:type="xsd:string">.234</ni:value>
       <prov:type xsi:type="xsd:QName">ni:statistic</prov:type>
     </prov:entity>
-    <prov:activity prov:id="a_1">
-      <prov:startTime>11/30/11 00:13:20.650432 EST</prov:startTime>
-      <prov:endTime>11/30/11 00:13:20.650550 EST</prov:endTime>
-      <prov:label>ni:brain_extraction</prov:label>
-    </prov:activity>
   </prov:records>
 </prov:container>

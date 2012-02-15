@@ -194,11 +194,11 @@ ProvPtr newProvenanceFactory(const char* id)
     PrivateProvPtr p_priv = (PrivateProvPtr)(p_prov->private);
     p_priv->doc = xmlNewDoc(BAD_CAST "1.0");
     xmlNodePtr root_node = xmlNewNode(NULL, BAD_CAST "container");
-    xmlSetProp(root_node, BAD_CAST "id", BAD_CAST id);
     xmlDocSetRootElement(p_priv->doc, root_node);
     root_node->ns = xmlNewNs(root_node, "http://openprovenance.org/prov-xml#", "prov");
     xmlNewNs(root_node, "http://www.w3.org/2001/XMLSchema-instance", "xsi");
     xmlNewNs(root_node, "http://www.w3.org/2001/XMLSchema", "xsd");
+    xmlNewNsProp(root_node, root_node->ns, BAD_CAST "id", BAD_CAST id);
 
     //fprintf(stdout, "Creating provenance object [END]\n");
     p_prov->p_record = (void *)newRecord(p_prov);
