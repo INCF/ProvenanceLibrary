@@ -35,7 +35,7 @@ main(int argc, char **argv, char** envp)
 {
     ProvPtr p_prov = newProvenanceFactory("1");
     RecordPtr p_record = p_prov->p_record;
-    IDREF id, act_id;
+    IDREF id, act_id, used_id, genby_id;
     char arg[50];
     int i;
 
@@ -49,7 +49,6 @@ main(int argc, char **argv, char** envp)
     char * cmdline = get_cmdline(argc, argv);
     addAttribute(p_record, act_id, "ni", NULL, "cmdline", cmdline);
     free(cmdline);
-    freeID(act_id);
 
     //Add all input parameters. if you use getopt this can be refined further
     for(i=1;i<argc; i++){
@@ -57,7 +56,8 @@ main(int argc, char **argv, char** envp)
 	addAttribute(p_record, id, "prov", "xsd:string", "type", "input");
         sprintf(arg, "arg%d", i);
 	addAttribute(p_record, id, NULL, NULL, arg, argv[i]);
-        newUsedRecord(p_record, act_id, id, NULL);
+	used_id = newUsedRecord(p_record, act_id, id, NULL);
+	freeID(used_id);
 	freeID(id);
     }
 
@@ -87,14 +87,17 @@ main(int argc, char **argv, char** envp)
     id = newEntity(p_record);
     addAttribute(p_record, id, "prov", "xsd:string", "type", "output:file");
     addAttribute(p_record, id, "ni", NULL, "warped_file", "/full/path/to/file");
-    newGeneratedByRecord(p_record, id, act_id, NULL);
+    genby_id = newGeneratedByRecord(p_record, id, act_id, NULL);
     freeID(id);
+    freeID(genby_id);
 
     id = newEntity(p_record);
     addAttribute(p_record, id, "prov", "xsd:string", "type", "output:stat");
     addAttribute(p_record, id, "ni", NULL, "pearson_correlation_coefficient", ".234");
-    newGeneratedByRecord(p_record, id, act_id, NULL);
+    genby_id = newGeneratedByRecord(p_record, id, act_id, NULL);
     freeID(id);
+    freeID(genby_id);
+    freeID(act_id);
 
     /* Test i/o manipulations */
     char *buffer;
@@ -113,6 +116,6 @@ main(int argc, char **argv, char** envp)
     print_provenance(p_prov2, NULL);
     print_provenance(p_prov2, "testprov2.xml");
     delProvenanceFactory(p_prov);
-
+    delProvenanceFactory(p_prov2);
     return(0);
 }

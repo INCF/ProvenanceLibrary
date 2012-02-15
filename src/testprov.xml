@@ -15,20 +15,20 @@
     </prov:entity>
     <prov:dependencies>
       <prov:used prov:id="u_0">
-        <prov:activity prov:ref="id"/>
+        <prov:activity prov:ref="a_0"/>
         <prov:entity prov:ref="e_0"/>
       </prov:used>
       <prov:used prov:id="u_1">
-        <prov:activity prov:ref="id"/>
+        <prov:activity prov:ref="a_0"/>
         <prov:entity prov:ref="e_1"/>
       </prov:used>
       <prov:wasGeneratedBy prov:id="wgb_0">
         <prov:entity prov:ref="e_4"/>
-        <prov:activity prov:ref="id"/>
+        <prov:activity prov:ref="a_0"/>
       </prov:wasGeneratedBy>
       <prov:wasGeneratedBy prov:id="wgb_1">
         <prov:entity prov:ref="e_5"/>
-        <prov:activity prov:ref="id"/>
+        <prov:activity prov:ref="a_0"/>
       </prov:wasGeneratedBy>
     </prov:dependencies>
     <prov:entity prov:id="e_1">

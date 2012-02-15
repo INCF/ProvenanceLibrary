@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -64,6 +65,7 @@ ProcessPtr newProcess(ProvObjectPtr p_prov, const char* startTime, const char* e
     IDREF act_id = newActivity(p_record, NULL, startTime, endTime);
     if (type != NULL)
 	addAttribute(p_record, act_id, "prov", NULL, "label", type);
+    assert(act_id);
     return((ProcessPtr)act_id);
 }
 
@@ -72,13 +74,16 @@ REFID newProcessInput(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* name,
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = newEntity(p_record);
+    assert(id);
     if (type == NULL)
 	addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:input");
     else
 	addAttribute(p_record, id, "prov", "xsd:string", "type", type);
     addAttribute(p_record, id, "ni", "xsd:string", "name", name);
     addAttribute(p_record, id, "ni", "xsd:string", "value", value);
-    newUsedRecord(p_record, (IDREF)p_proc, id, NULL);
+    IDREF used_id = newUsedRecord(p_record, (IDREF)p_proc, id, NULL);
+    assert(used_id);
+    freeID(used_id);
     return((REFID)id);
 }
 
@@ -87,13 +92,16 @@ REFID newProcessOutput(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* name
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
     IDREF id = newEntity(p_record);
+    assert(id);
     if (type == NULL)
 	addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:output");
     else
 	addAttribute(p_record, id, "prov", "xsd:string", "type", type);
     addAttribute(p_record, id, "ni", "xsd:string", "name", name);
     addAttribute(p_record, id, "ni", "xsd:string", "value", value);
-    newGeneratedByRecord(p_record, id, (IDREF)p_proc, NULL);
+    IDREF gen_id = newGeneratedByRecord(p_record, id, (IDREF)p_proc, NULL);
+    assert(gen_id);
+    freeID(gen_id);
     return((REFID)id);
 }
 
@@ -101,7 +109,9 @@ REFID newProcessOutput(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* name
 int addInput(ProvObjectPtr p_prov, ProcessPtr p_proc, REFID input)
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
-    newUsedRecord(p_record, (IDREF)p_proc, input, NULL);
+    IDREF id = newUsedRecord(p_record, (IDREF)p_proc, input, NULL);
+    assert(id);
+    freeID(id);
     return(0);
 }
 
@@ -109,7 +119,9 @@ int addInput(ProvObjectPtr p_prov, ProcessPtr p_proc, REFID input)
 int addOutput(ProvObjectPtr p_prov, ProcessPtr p_proc, REFID output)
 {
     RecordPtr p_record = ((ProvPtr)p_prov)->p_record;
-    newGeneratedByRecord(p_record, output, (IDREF)p_proc, NULL);
+    IDREF id = newGeneratedByRecord(p_record, output, (IDREF)p_proc, NULL);
+    assert(id);
+    freeID(id);
     return(0);
 }
 
@@ -137,10 +149,11 @@ static char* get_md5_hash(const char* path)
     }
     EVP_DigestFinal_ex(&mdctx, md_value, &md_len);
     EVP_MD_CTX_cleanup(&mdctx);
-    char* p_hash = (char*)malloc(2*md_len*sizeof(char));
-    char* p_idx = p_hash;
+    unsigned char* p_hash = (unsigned char*)malloc((2*md_len+1)*sizeof(unsigned char));
+    unsigned char* p_idx = p_hash;
     int i;
-    for(i = 0; i < md_len; i++, p_idx+=2) sprintf(p_idx, "%02x", md_value[i]);
+    for(i = 0; i < md_len; i++, p_idx+=2)
+	sprintf(p_idx, "%02x", md_value[i]);
     fclose(file);
     free(buffer);
     return p_hash;
@@ -162,6 +175,7 @@ REFID newFile(ProvObjectPtr p_prov, const char* filename, const char* type)
 	addAttribute(p_record, id, "ni", NULL, "md5sum", p_hash);
         free(p_hash);
     }
+    assert(id);
     return((REFID)id);
 }
 
@@ -177,6 +191,7 @@ REFID newFileCollection(ProvObjectPtr p_prov, const char** filenames, int n_file
 	addAttribute(p_record, id, "prov", "xsd:string", "type", type);
     for(i=0; i<n_files; i++)
 	addAttribute(p_record, id, "ni", NULL, "path", filenames[i]);
+    assert(id);
     return((REFID)id);
 }
 
@@ -187,6 +202,7 @@ REFID addEnvironVariable(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* na
     IDREF id = newEntity(p_record);
     addAttribute(p_record, id, "prov", "xsd:QName", "type", "ni:environ");
     addAttribute(p_record, id, "ni", NULL, name, getenv(name));
+    assert(id);
     return((REFID)id);
 }
 
@@ -216,6 +232,7 @@ REFID addAllEnvironVariables(ProvObjectPtr p_prov, ProcessPtr p_proc, char **env
        }
        free(name);
     }
+    assert(id);
     return((REFID)id);
 }
 
@@ -279,6 +296,11 @@ int freeREFID(REFID id)
 {
     freeID((IDREF)id);
     return(0);
+}
+
+int freeProcess(ProcessPtr p_proc)
+{
+    return(freeREFID((REFID)p_proc));
 }
 
 int addProvenanceRecord(ProvObjectPtr p_curprov, const ProvObjectPtr p_otherprov, const char *prefix)
