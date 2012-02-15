@@ -22,7 +22,7 @@ main(int argc, char **argv, char** envp)
 {
     ProvObjectPtr p_prov = newProvenanceObject("BET");
     ProcessPtr p_proc;
-    REFID id, act_id;
+    REFID id, act_id, input_id;
     char arg[50];
     int i;
 
@@ -39,7 +39,8 @@ main(int argc, char **argv, char** envp)
     //Add all input parameters. if you use getopt this can be refined further
     for(i=1;i<argc; i++){
         sprintf(arg, "arg%d", i);
-        newProcessInput(p_prov, p_proc, arg, argv[i], NULL);
+	input_id = newProcessInput(p_prov, p_proc, arg, argv[i], NULL);
+	freeREFID(input_id);
     }
 
     //addAllEnvironVariables(p_prov, p_proc, envp);
@@ -55,6 +56,7 @@ main(int argc, char **argv, char** envp)
     id = newProcessOutput(p_prov, p_proc, "pearson_correlation_coefficient", ".234", "ni:output");
     addType(p_prov, id, "ni:statistic", "xsd:QName");
     freeREFID(id);
+    freeProcess(p_proc);
 
     /* Test i/o manipulations */
     char *buffer;

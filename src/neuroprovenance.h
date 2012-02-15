@@ -26,6 +26,7 @@ void freeBuffer(char* buffer);
 
 /* Record creation routines */
 ProcessPtr newProcess(ProvObjectPtr, const char* startTime, const char* endTime, const char* type);
+int freeProcess(ProcessPtr p_proc);
 
 REFID newProcessInput(ProvObjectPtr p_prov, ProcessPtr p_proc, const char* name, const char* value, const char* type);
 REFID newProcessOutput(ProvObjectPtr p_prov, ProcessPtr, const char* name, const char* value, const char* type);
