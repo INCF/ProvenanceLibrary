@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prov:container xmlns:prov="http://openprovenance.org/prov-xml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ni="https://github.com/INCF/ProvenanceLibrary/wiki/terms" prov:id="BET">
+  <prov:records>
+    <prov:activity prov:id="a_0">
+      <prov:startTime>15-Feb-2012 13:37:29</prov:startTime>
+      <prov:endTime>15-Feb-2012 13:37:30</prov:endTime>
+      <prov:label>ni:brain_extraction</prov:label>
+    </prov:activity>
+    <prov:entity prov:id="e_0">
+      <prov:type xsi:type="xsd:string">NIFTI Image #1</prov:type>
+      <ni:name xsi:type="xsd:string">FileName</ni:name>
+      <ni:value xsi:type="xsd:string">???</ni:value>
+    </prov:entity>
+    <prov:dependencies>
+      <prov:used prov:id="u_0">
+        <prov:activity prov:ref="a_0"/>
+        <prov:entity prov:ref="e_0"/>
+      </prov:used>
+      <prov:used prov:id="u_1">
+        <prov:activity prov:ref="a_0"/>
+        <prov:entity prov:ref="e_1"/>
+      </prov:used>
+    </prov:dependencies>
+    <prov:entity prov:id="e_1">
+      <prov:type xsi:type="xsd:string">NIFTI Image #2</prov:type>
+      <ni:name xsi:type="xsd:string">FileName</ni:name>
+      <ni:value xsi:type="xsd:string">???</ni:value>
+    </prov:entity>
+  </prov:records>
+</prov:container>
