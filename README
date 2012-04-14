@@ -32,7 +32,12 @@ Click on raw to get rendered html
 Data model
 ~~~~~~~~~~
 
-http://dvcs.w3.org/hg/prov/file/tip/model/ProvenanceModel.html
+http://dvcs.w3.org/hg/prov/raw-file/tip/model/prov-dm.html
+
+Notation
+~~~~~~~~
+
+http://dvcs.w3.org/hg/prov/raw-file/tip/model/prov-n.html
 
 Ontology
 ~~~~~~~~
