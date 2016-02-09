@@ -5,7 +5,7 @@
 //  Created by Satrajit Ghosh on 11/25/11.
 //  Copyright (c) 2011 TankThink Labs LLC. All rights reserved.
 //
-#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
